@@ -1,0 +1,51 @@
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+
+  <h2>Disciplinas por Curso</h2></br>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <select id="course" name="course" class="form-control">
+          <option value="none" selected disabled hidden>Selecione um Curso</option>
+          {% for course in courses %}
+            {% if current_course.id == course.id %}
+              <option selected value="{{course.id}}">{{course}}</option>
+            {% else %}
+              <option value="{{course.id}}">{{course}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <button type="submit" class="btn btn-primary">Pesquisar</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Sigla</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Curso</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for discipline in disciplines %}
+      <tr>
+        <td>{{ discipline.name }}</td>
+        <td>{{ discipline.initials }}</td>
+        <td>{{ discipline.description }}</td>
+        <td>{{ discipline.course }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

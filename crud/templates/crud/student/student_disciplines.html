@@ -1,0 +1,31 @@
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h2>Aluno: {{student}}</h2></br>
+  <h5>Disciplinas já matriculadas</h5>
+  <ul>
+    {% for discipline in enrolled_disciplines %}
+    <li>{{ discipline }}</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="disciplines">Disciplinas</label>
+        <select multiple id="disciplines" name="disciplines" class="form-control">
+          {% for discipline in disciplines %}
+            <option value="{{discipline.id}}">{{discipline}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+</div>
+
+{% endblock %}
