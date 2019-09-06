@@ -1,3 +1,19 @@
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: mediumslateblue;
+}
+
+a:hover {
+    color: rgb(25, 17, 68);
+}
+
+a:visited {
+    color: orangered;
+}
+
 .image-home{
     width: 130px;
     background-color: white;
@@ -5,7 +21,6 @@
     margin-left: 120px;
     margin-top: -60px;
     margin-bottom: 70px;
-    position: absolute;
 }
 
 .image-block{
