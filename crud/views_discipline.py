@@ -11,7 +11,7 @@ class DisciplineForm(ModelForm):
 
 def discipline_list(request, template_name='crud/discipline/discipline_list.html'):
     disciplines = Discipline.objects.all()
-    context = {'disciplines': disciplines}
+    context = {'disciplines': disciplines, 'disciplines_count': disciplines.count()}
     return render(request, template_name, context)
 
 

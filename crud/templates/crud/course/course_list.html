@@ -12,6 +12,15 @@
                 <th scope="col">Editar</th>
                 <th scope="col">Remover</th>
             </tr>
+            <tfoot>
+            <tr>
+                <td><strong>Total: {{courses_count}} Cursos </strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
         </thead>
         <tbody>
             {% for course in courses %}
@@ -28,6 +37,7 @@
             </tr>
             {% endfor %}
         </tbody>
+        
     </table>
 </div>
 

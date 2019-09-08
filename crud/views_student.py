@@ -13,7 +13,7 @@ class StudentForm(ModelForm):
 
 def student_list(request, template_name='crud/student/student_list.html'):
     students = Student.objects.all()
-    context = {'students': students}
+    context = {'students': students, 'students_count': students.count()}
     return render(request, template_name, context)
 
 

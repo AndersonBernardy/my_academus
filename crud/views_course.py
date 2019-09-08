@@ -12,7 +12,7 @@ class CourseForm(ModelForm):
 
 def course_list(request, template_name='crud/course/course_list.html'):
     courses = Course.objects.all()
-    context = {'courses': courses}
+    context = {'courses': courses, 'courses_count': courses.count()}
     return render(request, template_name, context)
 
 
