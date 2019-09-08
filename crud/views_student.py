@@ -57,7 +57,7 @@ def RelatStudentsInDiscipline(request, template_name='crud/student/student_in_di
     if request.method == 'POST':
         discipline = get_object_or_404(Discipline, pk=request.POST.get("discipline"))
         students = discipline.student_set.select_related()
-        context = {'disciplines':disciplines, 'current_discipline':discipline, 'students':students}
+        context = {'disciplines':disciplines, 'current_discipline':discipline, 'students':students, 'students_count': students.count()}
 
     return render(request, template_name, context)
 
@@ -71,7 +71,7 @@ def RelatStudentsInCourse(request, template_name='crud/student/student_in_course
     if request.method == 'POST':
         course = get_object_or_404(Course, pk=request.POST.get("course"))
         students = course.student_set.select_related()
-        context = {'courses':courses, 'current_course':course, 'students':students}
+        context = {'courses':courses, 'current_course':course, 'students':students,'students_count': students.count()}
 
     return render(request, template_name, context)
 

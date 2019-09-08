@@ -55,7 +55,7 @@ def RelatDisciplinesInCourse(request, template_name='crud/discipline/discipline_
     if request.method == 'POST':
         course = get_object_or_404(Course, pk=request.POST.get("course"))
         disciplines = course.discipline_set.select_related()
-        context = {'courses':courses, 'current_course':course, 'disciplines':disciplines}
+        context = {'courses':courses, 'current_course':course, 'disciplines':disciplines, 'disciplines_count': disciplines.count()}
 
     return render(request, template_name, context)
 
