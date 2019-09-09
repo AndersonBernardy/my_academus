@@ -48,7 +48,7 @@ def student_delete(request, pk, template_name='crud/student/student_confirm_dele
     return render(request, template_name, context)
 
 
-def RelatStudentsInDiscipline(request, template_name='crud/student/student_in_discipline.html'):
+def report_students_in_discipline(request, template_name='crud/student/student_in_discipline.html'):
     disciplines = Discipline.objects.all()
 
     if request.method == 'GET':
@@ -62,7 +62,7 @@ def RelatStudentsInDiscipline(request, template_name='crud/student/student_in_di
     return render(request, template_name, context)
 
 
-def RelatStudentsInCourse(request, template_name='crud/student/student_in_course.html'):
+def report_students_in_course(request, template_name='crud/student/student_in_course.html'):
     courses = Course.objects.all()
 
     if request.method == 'GET':
@@ -75,7 +75,7 @@ def RelatStudentsInCourse(request, template_name='crud/student/student_in_course
 
     return render(request, template_name, context)
 
-def RegisterStudentInDiscipline(request, pk, template_name="crud/student/student_disciplines.html"):
+def register_student_in_discipline(request, pk, template_name="crud/student/student_disciplines.html"):
     student = get_object_or_404(Student, pk=pk)
     disciplines = Discipline.objects.filter(course=student.course)
     enrolled_disciplines = student.enrolled_disciplines.all()
@@ -90,4 +90,10 @@ def RegisterStudentInDiscipline(request, pk, template_name="crud/student/student
             student.enrolled_disciplines.set(request.POST.getlist('disciplines'))
             student.save()
 
+    return render(request, template_name, context)
+
+
+def student_view(request, pk, template_name='crud/student/student_detail.html'):
+    student = get_object_or_404(Student, pk=pk)
+    context = {'student':student}
     return render(request, template_name, context)

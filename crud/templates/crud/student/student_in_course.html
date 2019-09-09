@@ -29,32 +29,25 @@
   <table class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Data de nascimento</th>
         <th scope="col">Registro acadêmico</th>
+        <th scope="col">Nome</th>
         <th scope="col">Curso</th>
         <th scope="col">Data de Ingresso</th>
       </tr>
       <tfoot>
-            <tr>
-                <td><strong>Total: {{students_count}} Alunos </strong></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-            </tr>
-        </tfoot>
+        <tr>
+          <td><strong>Total: {{students_count}} Alunos </strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
     </thead>
     <tbody>
       {% for student in students %}
       <tr>
-        <td>{{ student.name }}</td>
-        <td>{{ student.birthdate }}</td>
         <td>{{ student.registration_number }}</td>
+        <td>{{ student.name }}</td>
         <td>{{ student.course }}</td>
         <td>{{ student.registration_date }}</td>
       </tr>

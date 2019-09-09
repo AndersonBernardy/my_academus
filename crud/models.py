@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class DurationChoice(models.Model):
     short = models.CharField(max_length=10, primary_key=True)
     description = models.CharField(max_length=32)
@@ -29,6 +30,7 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
+
 class AcademicPeriod(models.Model):
     short = models.CharField(max_length=10, primary_key=True)
     description = models.CharField(max_length=32)
@@ -46,32 +48,33 @@ class Discipline(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name', 'course'], name='unique_enrollment')
+            models.UniqueConstraint(fields=['name', 'course'], name='unique_discipline')
         ]
 
     def __str__(self):
         return self.name
 
 
-class DisciplineClass(models.Model):
+class Class(models.Model):
+    code = models.CharField(max_length=16, unique=True)
     discipline = models.ForeignKey(Discipline, on_delete=models.PROTECT)
     start_date = models.DateField()
     end_date = models.DateField()
 
 
 class ClassTime(models.Model):
-    discipline_class = models.ForeignKey(DisciplineClass, on_delete=models.CASCADE)
+    d_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     class_datetime = models.DateField()
 
 
-class Enrollment(models.Model):
+class Enrolment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    discipline_class = models.ForeignKey(DisciplineClass, on_delete=models.PROTECT)
-    enrollment_date = models.DateField(auto_now_add=True)
+    d_class = models.ForeignKey(Class, on_delete=models.PROTECT)
+    enrolment_date = models.DateField(auto_now_add=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['discipline_class', 'student'], name='unique_enrollment')
+            models.UniqueConstraint(fields=['d_class', 'student'], name='unique_enrolment')
         ]
 
 
@@ -81,6 +84,7 @@ class PresenceChoice(models.Model):
     
     def __str__(self):
         return self.short
+
 
 class Frequency(models.Model):
     presence = models.ForeignKey(PresenceChoice, on_delete=models.PROTECT)
@@ -96,9 +100,9 @@ class Frequency(models.Model):
 class Assessment(models.Model):
     assessment_number = models.IntegerField()
     grade = models.DecimalField(max_digits=5, decimal_places=2)
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+    enrolment = models.ForeignKey(Enrolment, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['assessment_number', 'enrollment'], name='assessment_enrollment')
+            models.UniqueConstraint(fields=['assessment_number', 'enrolment'], name='assessment_enrolment')
         ]

@@ -27,15 +27,21 @@
       <tr>
         <td>{{ course.name }}</td>
         <td>{{ course.initials }}</td>
-        <td><a href="{% url 'course_detail' course.id %}">
-          <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
-        </a></td>
-        <td><a href="{% url 'course_edit' course.id %}">
-          <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
-        </a></td>
-        <td><a href="{% url 'course_delete' course.id %}">
-          <img class="image-icon" src="https://image.flaticon.com/icons/svg/64/64022.svg">
-        </a></td>
+        <td>
+          <a href="{% url 'course_detail' course.id %}">
+            <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'course_edit' course.id %}">
+            <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'course_delete' course.id %}">
+            <img class="image-icon" src="https://image.flaticon.com/icons/svg/64/64022.svg">
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

@@ -9,6 +9,7 @@ class DisciplineForm(ModelForm):
         model = Discipline
         fields = ['name', 'initials', 'description', 'course', 'academic_period']
 
+
 def discipline_list(request, template_name='crud/discipline/discipline_list.html'):
     disciplines = Discipline.objects.all()
     context = {'disciplines': disciplines, 'disciplines_count': disciplines.count()}
@@ -48,7 +49,7 @@ def discipline_delete(request, pk, template_name='crud/discipline/discipline_con
     return render(request, template_name, context)
 
 
-def RelatDisciplinesInCourse(request, template_name='crud/discipline/discipline_in_course.html'):
+def report_disciplines_in_course(request, template_name='crud/discipline/discipline_in_course.html'):
     courses = Course.objects.all()
 
     if request.method == 'GET':
@@ -67,3 +68,5 @@ def discipline_view(request, pk, template_name='crud/discipline/discipline_detai
     periods = AcademicPeriod.objects.all()
     context = {'discipline':discipline, 'periods': periods}
     return render(request, template_name, context)
+
+
