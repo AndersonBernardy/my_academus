@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from crud.models import Course
+from crud.models import Course, DurationChoice
 
 
 class CourseForm(ModelForm):
     class Meta:
         model = Course
-        fields = ['name', 'description', 'initials']
+        fields = ['name', 'description', 'initials', 'duration']
 
 
 def course_list(request, template_name='crud/course/course_list.html'):
@@ -31,7 +31,8 @@ def course_edit(request, pk, template_name='crud/course/course_form.html'):
     if form.is_valid():
         form.save()
         return redirect('course_list')
-    context = {'action':'edit', 'form':form}
+    durations = DurationChoice.objects.all()
+    context = {'action':'edit', 'form':form, 'durations': durations}
     return render(request, template_name, context)
 
 
@@ -44,7 +45,8 @@ def course_delete(request, pk, template_name='crud/course/course_confirm_delete.
     return render(request, template_name, context)
 
 
-# def course_view(request, pk, template_name='crud/course/course_detail.html'):
-#     course = get_object_or_404(Course, pk=pk)
-#     context = {'action':'list', 'course': course}
-#     return render(request, template_name, context)
+def course_view(request, pk, template_name='crud/course/course_detail.html'):
+    course = get_object_or_404(Course, pk=pk)
+    disciplines = course.discipline_set.select_related()
+    context = {'action':'list', 'course': course, 'disciplines': disciplines}
+    return render(request, template_name, context)

@@ -31,6 +31,21 @@
         value="{{form.instance.description}}">
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+          <label for="duration">Duração</label>
+          <select id="duration" name="duration" class="form-control">
+            <option value="none" selected disabled hidden>Selecione uma Duração</option>
+            {% for duration in durations %}
+              {% if form.instance.duration.short == duration.short %}
+                <option selected value="{{duration.short}}">{{duration.description}}</option>
+              {% else %}
+                <option value="{{duration.short}}">{{duration.description}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
     <br>
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>

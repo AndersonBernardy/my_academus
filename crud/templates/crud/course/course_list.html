@@ -8,7 +8,7 @@
             <tr>
                 <th scope="col">Nome</th>
                 <th scope="col">Sigla</th>
-                <th scope="col">Descrição</th>
+                <th scope="col">Ver</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Remover</th>
             </tr>
@@ -27,7 +27,9 @@
             <tr>
                 <td>{{ course.name }}</td>
                 <td>{{ course.initials }}</td>
-                <td>{{ course.description }}</td>
+                <td><a href="{% url 'course_detail' course.id %}">
+                    <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
+                </a></td>
                 <td><a href="{% url 'course_edit' course.id %}">
                     <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149850.svg">
                 </a></td>
