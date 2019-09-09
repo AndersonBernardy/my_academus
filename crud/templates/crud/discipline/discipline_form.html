@@ -19,12 +19,12 @@
       </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="description">Sigla</label>
-          <input type="text" class="form-control" id="initials" name="initials" placeholder="XX" 
-          value={{form.instance.initials}}>
-        </div>
+      <div class="form-group col-md-6">
+        <label for="description">Sigla</label>
+        <input type="text" class="form-control" id="initials" name="initials" placeholder="XX" 
+        value={{form.instance.initials}}>
       </div>
+    </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="description">Descrição</label>
@@ -47,6 +47,21 @@
         </select>
       </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="academic_period">Período</label>
+          <select id="academic_period" name="academic_period" class="form-control">
+            <option value="none" selected disabled hidden>Selecione um Período</option>
+            {% for period in periods %}
+              {% if form.instance.academic_period.short == period.short %}
+                <option selected value="{{period.short}}">{{period.description}}</option>
+              {% else %}
+                <option value="{{period.short}}">{{period.description}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
     <br>
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>

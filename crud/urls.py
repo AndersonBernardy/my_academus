@@ -10,6 +10,7 @@ urlpatterns = [
 
     path('discipline/view', views_discipline.discipline_list, name='discipline_list'),
     path('discipline/new', views_discipline.discipline_create, name='discipline_create'),
+    path('discipline/view/<int:pk>', views_discipline.discipline_view, name='discipline_detail'),
     path('discipline/edit/<int:pk>', views_discipline.discipline_edit, name='discipline_edit'),
     path('discipline/delete/<int:pk>', views_discipline.discipline_delete, name='discipline_delete'),
 

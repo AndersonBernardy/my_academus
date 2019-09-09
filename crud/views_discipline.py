@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from crud.models import Discipline, Course
+from crud.models import Discipline, Course, AcademicPeriod
 
 
 class DisciplineForm(ModelForm):
     class Meta:
         model = Discipline
-        fields = ['name', 'initials', 'description', 'course']
+        fields = ['name', 'initials', 'description', 'course', 'academic_period']
 
 def discipline_list(request, template_name='crud/discipline/discipline_list.html'):
     disciplines = Discipline.objects.all()
@@ -18,11 +18,12 @@ def discipline_list(request, template_name='crud/discipline/discipline_list.html
 def discipline_create(request, template_name='crud/discipline/discipline_form.html'):
     form = DisciplineForm(request.POST or None)
     courses = Course.objects.all()
+    periods = AcademicPeriod.objects.all()
     if form.is_valid():
         print(form.fields['course'])
         form.save()
         return redirect('discipline_list')
-    context = {'action':'create', 'form':form, 'courses':courses}
+    context = {'action':'create', 'form':form, 'courses':courses, 'periods': periods}
     return render(request, template_name, context)
 
 
@@ -33,7 +34,8 @@ def discipline_edit(request, pk, template_name='crud/discipline/discipline_form.
     if form.is_valid():
         form.save()
         return redirect('discipline_list')
-    context = {'action':'edit', 'form':form, 'courses':courses}
+    periods = AcademicPeriod.objects.all()
+    context = {'action':'edit', 'form':form, 'courses':courses, 'periods': periods}
     return render(request, template_name, context)
 
 
@@ -60,6 +62,8 @@ def RelatDisciplinesInCourse(request, template_name='crud/discipline/discipline_
     return render(request, template_name, context)
 
 
-# def discipline_view(request, pk, template_name='crud/discipline/discipline_detail.html'):
-#     discipline = get_object_or_404(Discipline, pk=pk)    
-#     return render(request, template_name, {'discipline':discipline})
+def discipline_view(request, pk, template_name='crud/discipline/discipline_detail.html'):
+    discipline = get_object_or_404(Discipline, pk=pk)
+    periods = AcademicPeriod.objects.all()
+    context = {'discipline':discipline, 'periods': periods}
+    return render(request, template_name, context)
