@@ -26,8 +26,13 @@ def discipline_create(request, template_name='crud/discipline/discipline_form.ht
 
 def discipline_view(request, pk, template_name='crud/discipline/discipline_detail.html'):
     discipline = get_object_or_404(Discipline, pk=pk)
+    courses = Course.objects.all()
+    form = DisciplineForm(request.POST or None, instance=discipline)
+    if form.is_valid():
+        form.save()
+        return redirect('discipline_list')
     periods = AcademicPeriod.objects.all()
-    context = {'discipline':discipline, 'periods': periods}
+    context = {'action':'edit', 'form':form, 'courses':courses, 'periods': periods}
     return render(request, template_name, context)
 
 

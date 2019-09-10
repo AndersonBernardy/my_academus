@@ -3,15 +3,15 @@ a {
 }
 
 a:link {
-    color: mediumslateblue;
+    color: rgb(214, 63, 101);
 }
 
 a:hover {
-    color: rgb(25, 17, 68);
+    color: rgb(99, 9, 24);
 }
 
 a:visited {
-    color: orangered;
+    color: rgb(212, 188, 51);
 }
 
 .image-home{
@@ -20,7 +20,7 @@ a:visited {
     border-radius: 100px;
     margin-left: 120px;
     margin-top: -60px;
-    margin-bottom: 70px;
+    margin-bottom: -60px;
 }
 
 .image-block{

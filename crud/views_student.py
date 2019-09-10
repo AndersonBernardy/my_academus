@@ -25,8 +25,13 @@ def student_create(request, template_name='crud/student/student_form.html'):
 
 def student_view(request, pk, template_name='crud/student/student_detail.html'):
     student = get_object_or_404(Student, pk=pk)
-    context = {'student':student}
-    # TODO lista de disciplinas matriculadas.
+    courses = Course.objects.all()
+    form = StudentForm(request.POST or None, instance=student)
+    if form.is_valid():
+        form.save()
+        return redirect('student_list')
+    birthdate = student.birthdate.strftime('%Y-%m-%d')
+    context = {'action':'edit', 'form':form, 'courses':courses, 'birthdate':birthdate}
     return render(request, template_name, context)
 
 

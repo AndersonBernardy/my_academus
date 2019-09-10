@@ -3,24 +3,24 @@
 {% block content %}
 
 <div class="container">
-  <div class="form-group">
-    <div class="form-row col-md-6">
-      <label for="name"><b>Nome: </b></label>
-      <label>{{course.name}}</label>
-    </div>
-    <div class="form-row col-md-6">
-      <label for="initials"><b>Sigla: </b></label>
-      <label>{{course.initials}}</label>
-    </div>
-    <div class="form-row col-md-6">
-      <label for="description"><b>Descrição: </b></label>
-      <label>{{course.description}}</label>
-    </div>
-    <div class="form-row col-md-6">
-        <label for="duration"><b>Duração: </b></label>
-        <label>{{course.duration}}</label>
-      </div>
-  </div>
+  <h2>{{course.name}}</h2><br/>
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Sigla</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Duração</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>{{course.initials}}</td>
+          <td>{{course.description}}</td>
+          <td>{{course.duration}}</td>
+      </tr>
+    </tbody>
+  </table>
+
   <h3>Disciplinas:</h3><br/>
   <table class="table table-hover">
     <thead class="thead-light">
