@@ -4,10 +4,7 @@ from django.forms import ModelForm
 from crud.models import Discipline, Class
 
 
-def class_list(request, template_name='crud/class/class_list.html'):
-    context = {}
-    return render(request, template_name, context)
-
+# ---------- CRUD ----------
 
 def class_create(request, template_name='crud/class/class_form.html'):
     context = {}
@@ -16,6 +13,12 @@ def class_create(request, template_name='crud/class/class_form.html'):
 
 def class_view(request, pk, template_name='crud/class/class_detail.html'):
     context = {}
+    return render(request, template_name, context)
+
+
+def class_list(request, template_name='crud/class/class_list.html'):
+    classes = Class.objects.all()
+    context = {'classes': classes, 'classes_count': 0 + classes.count()}
     return render(request, template_name, context)
 
 

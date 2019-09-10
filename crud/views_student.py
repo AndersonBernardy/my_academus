@@ -11,11 +11,7 @@ class StudentForm(ModelForm):
         fields = ['name', 'birthdate', 'cpf', 'course',]
 
 
-def student_list(request, template_name='crud/student/student_list.html'):
-    students = Student.objects.all()
-    context = {'students': students, 'students_count': students.count()}
-    return render(request, template_name, context)
-
+# ---------- CRUD ----------
 
 def student_create(request, template_name='crud/student/student_form.html'):
     form = StudentForm(request.POST or None)
@@ -24,6 +20,19 @@ def student_create(request, template_name='crud/student/student_form.html'):
         form.save()
         return redirect('student_list')
     context = {'action':'create', 'form':form, 'courses':courses}
+    return render(request, template_name, context)
+
+
+def student_view(request, pk, template_name='crud/student/student_detail.html'):
+    student = get_object_or_404(Student, pk=pk)
+    context = {'student':student}
+    # TODO lista de disciplinas matriculadas.
+    return render(request, template_name, context)
+
+
+def student_list(request, template_name='crud/student/student_list.html'):
+    students = Student.objects.all()
+    context = {'students': students, 'students_count': students.count()}
     return render(request, template_name, context)
 
 
@@ -48,16 +57,20 @@ def student_delete(request, pk, template_name='crud/student/student_confirm_dele
     return render(request, template_name, context)
 
 
+# ---------- REPORT ----------
+
 def report_students_in_discipline(request, template_name='crud/student/student_in_discipline.html'):
     disciplines = Discipline.objects.all()
 
     if request.method == 'GET':
-        context = {'disciplines':disciplines, 'discipline':None, 'students':None}
+        context = {'disciplines':disciplines}
 
     if request.method == 'POST':
-        discipline = get_object_or_404(Discipline, pk=request.POST.get("discipline"))
-        students = discipline.student_set.select_related()
-        context = {'disciplines':disciplines, 'current_discipline':discipline, 'students':students, 'students_count': students.count()}
+        pass
+        # TODO agora a matricula é na turma
+        # discipline = get_object_or_404(Discipline, pk=request.POST.get("discipline"))
+        # students = discipline.student_set.select_related()
+        # context = {'disciplines':disciplines, 'current_discipline':discipline, 'students':students, 'students_count': students.count()}
 
     return render(request, template_name, context)
 
@@ -66,34 +79,11 @@ def report_students_in_course(request, template_name='crud/student/student_in_co
     courses = Course.objects.all()
 
     if request.method == 'GET':
-        context = {'courses':courses, 'course':None, 'disciplines':None}
+        context = {'courses':courses}
 
     if request.method == 'POST':
         course = get_object_or_404(Course, pk=request.POST.get("course"))
         students = course.student_set.select_related()
         context = {'courses':courses, 'current_course':course, 'students':students,'students_count': students.count()}
 
-    return render(request, template_name, context)
-
-def register_student_in_discipline(request, pk, template_name="crud/student/student_disciplines.html"):
-    student = get_object_or_404(Student, pk=pk)
-    disciplines = Discipline.objects.filter(course=student.course)
-    enrolled_disciplines = student.enrolled_disciplines.all()
-    context = {
-        'student':student,
-        'disciplines':disciplines,
-        'enrolled_disciplines':enrolled_disciplines
-    }
-
-    if request.method == 'POST':
-        if request.POST.get('disciplines') != None:
-            student.enrolled_disciplines.set(request.POST.getlist('disciplines'))
-            student.save()
-
-    return render(request, template_name, context)
-
-
-def student_view(request, pk, template_name='crud/student/student_detail.html'):
-    student = get_object_or_404(Student, pk=pk)
-    context = {'student':student}
     return render(request, template_name, context)

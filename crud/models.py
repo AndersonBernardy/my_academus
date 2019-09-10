@@ -48,7 +48,8 @@ class Discipline(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name', 'course'], name='unique_discipline')
+            models.UniqueConstraint(fields=['name', 'course'], name='unique_discipline_name'),
+            models.UniqueConstraint(fields=['initials', 'course'], name='unique_discipline_initials'),
         ]
 
     def __str__(self):
@@ -60,6 +61,9 @@ class Class(models.Model):
     discipline = models.ForeignKey(Discipline, on_delete=models.PROTECT)
     start_date = models.DateField()
     end_date = models.DateField()
+
+    def __str__(self):
+        return self.code
 
 
 class ClassTime(models.Model):

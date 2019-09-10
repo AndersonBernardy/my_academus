@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-  <h2>Excluir Curso</h2><br>
+  <h2>Excluir Curso</h2><br/>
   <form method="post">{% csrf_token %}
     <h5>Você tem certeza que deseja excluir o curso: <b>"{{ course }}"</b> ?</h5><br>
     <input class="btn btn-primary" type="submit" value="Confirmar" />

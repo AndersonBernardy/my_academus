@@ -10,11 +10,7 @@ class DisciplineForm(ModelForm):
         fields = ['name', 'initials', 'description', 'course', 'academic_period']
 
 
-def discipline_list(request, template_name='crud/discipline/discipline_list.html'):
-    disciplines = Discipline.objects.all()
-    context = {'disciplines': disciplines, 'disciplines_count': disciplines.count()}
-    return render(request, template_name, context)
-
+# ---------- CRUD ----------
 
 def discipline_create(request, template_name='crud/discipline/discipline_form.html'):
     form = DisciplineForm(request.POST or None)
@@ -25,6 +21,19 @@ def discipline_create(request, template_name='crud/discipline/discipline_form.ht
         form.save()
         return redirect('discipline_list')
     context = {'action':'create', 'form':form, 'courses':courses, 'periods': periods}
+    return render(request, template_name, context)
+
+
+def discipline_view(request, pk, template_name='crud/discipline/discipline_detail.html'):
+    discipline = get_object_or_404(Discipline, pk=pk)
+    periods = AcademicPeriod.objects.all()
+    context = {'discipline':discipline, 'periods': periods}
+    return render(request, template_name, context)
+
+
+def discipline_list(request, template_name='crud/discipline/discipline_list.html'):
+    disciplines = Discipline.objects.all()
+    context = {'disciplines': disciplines, 'disciplines_count': disciplines.count()}
     return render(request, template_name, context)
 
 
@@ -48,25 +57,20 @@ def discipline_delete(request, pk, template_name='crud/discipline/discipline_con
     context = {'action':'delete', 'discipline':discipline}
     return render(request, template_name, context)
 
+# ---------- REPORT ----------
 
 def report_disciplines_in_course(request, template_name='crud/discipline/discipline_in_course.html'):
     courses = Course.objects.all()
 
     if request.method == 'GET':
-        context = {'courses':courses, 'course':None, 'disciplines':None}
+        context = {'courses':courses}
 
     if request.method == 'POST':
         course = get_object_or_404(Course, pk=request.POST.get("course"))
         disciplines = course.discipline_set.select_related()
-        context = {'courses':courses, 'current_course':course, 'disciplines':disciplines, 'disciplines_count': disciplines.count()}
+        context = {'courses':courses, 'current_course':course, 'disciplines':disciplines, 'disciplines_count': 0 + disciplines.count()}
 
     return render(request, template_name, context)
 
-
-def discipline_view(request, pk, template_name='crud/discipline/discipline_detail.html'):
-    discipline = get_object_or_404(Discipline, pk=pk)
-    periods = AcademicPeriod.objects.all()
-    context = {'discipline':discipline, 'periods': periods}
-    return render(request, template_name, context)
 
 

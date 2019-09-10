@@ -4,7 +4,7 @@
 
 <div class="container">
 
-  <h2>Alunos por Curso</h2></br>
+  <h2>Alunos por Curso</h2><br/>
   <form method="post">
     {% csrf_token %}
     <div class="form-row">
@@ -30,14 +30,12 @@
     <thead class="thead-light">
       <tr>
         <th scope="col">Registro acadêmico</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Curso</th>
+        <th scope="col">Aluno</th>
         <th scope="col">Data de Ingresso</th>
       </tr>
       <tfoot>
         <tr>
           <td><strong>Total: {{students_count}} Alunos </strong></td>
-          <td></td>
           <td></td>
           <td></td>
         </tr>
@@ -48,7 +46,6 @@
       <tr>
         <td>{{ student.registration_number }}</td>
         <td>{{ student.name }}</td>
-        <td>{{ student.course }}</td>
         <td>{{ student.registration_date }}</td>
       </tr>
       {% endfor %}

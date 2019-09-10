@@ -5,10 +5,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>My Academus</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/newcss.css" /> 
-    <script src='main.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
@@ -34,8 +32,8 @@
       <div class="image-home">
         <img src="https://image.flaticon.com/icons/svg/201/201608.svg">
       </div>
-      </br>
-      </br>
+      <br/>
+      <br/>
       <div>
         <h3>Estudantes</h3>
       </div>
@@ -55,8 +53,8 @@
       <div class="image-home">
         <img src="https://image.flaticon.com/icons/svg/201/201614.svg">
       </div>
-      </br>
-      </br>
+      <br/>
+      <br/>
       <div>
         <h3>Disciplinas</h3>
       </div>
@@ -69,29 +67,29 @@
             <a href="{% url 'discipline_list' %}">Listar</a>
           </li>
         </ul>
-        </div>
       </div>
+    </div>
       
-      <div class="col-sm-3">
-        <div class="image-home">
-          <img src="https://image.flaticon.com/icons/svg/201/201594.svg">
-        </div>
-        </br>
-        </br>
-        <div>
-          <h3>Cursos</h3>
-        </div>
-        <div>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <a href="{% url 'course_create' %}">Cadastrar</a>
-            </li>
-            <li class="list-group-item">
-              <a href="{% url 'course_list' %}">Listar</a>
-            </li>
-          </ul>
-        </div>
+    <div class="col-sm-3">
+      <div class="image-home">
+        <img src="https://image.flaticon.com/icons/svg/201/201594.svg">
       </div>
+      <br/>
+      <br/>
+      <div>
+        <h3>Cursos</h3>
+      </div>
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="{% url 'course_create' %}">Cadastrar</a>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'course_list' %}">Listar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 
