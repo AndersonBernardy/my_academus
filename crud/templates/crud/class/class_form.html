@@ -3,65 +3,44 @@
 {% block content %}
 
 <div class="container">
-  {% if action == "create" %}
-    <h2>Novo Disciplina</h2><br/>
-  {% elif action == "edit" %}
-    <h2>Editar Disciplina</h2><br/>
-  {% endif %}
+  <h2>Nova Turma</h2><br/>
 
   <form method="post">
     {% csrf_token %}
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="name">Nome</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Nome"
-          value="{{form.instance.name}}">
+        <input type="text" class="form-control" id="code" name="code" placeholder="Nome" value="{{form.instance.code}}">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="description">Sigla</label>
-        <input type="text" class="form-control" id="initials" name="initials" placeholder="XX" 
-          value="{{form.instance.initials}}">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="description">Descrição</label>
-        <input type="text" class="form-control" id="description" name="description" placeholder="Descrição" 
-          value="{{form.instance.description}}">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="course">Curso</label>
-        <select id="course" name="course" class="form-control">
-          <option value="none" selected disabled hidden>Selecione um Curso</option>
-          {% for course in courses %}
-            {% if form.instance.course.id == course.id %}
-              <option selected value="{{course.id}}">{{course}}</option>
+        <label for="discipline">Disciplina</label>
+        <select id="discipline" name="discipline" class="form-control">
+          <option value="none" selected disabled hidden>Selecione uma Disciplina</option>
+          {% for discipline in disciplines %}
+            {% if form.instance.discipline == discipline %}
+              <option selected value="{{discipline.id}}">{{discipline}}</option>
             {% else %}
-              <option value="{{course.id}}">{{course}}</option>
+              <option value="{{discipline.id}}">{{discipline}}</option>
             {% endif %}
           {% endfor %}
         </select>
       </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="academic_period">Período</label>
-          <select id="academic_period" name="academic_period" class="form-control">
-            <option value="none" selected disabled hidden>Selecione um Período</option>
-            {% for period in periods %}
-              {% if form.instance.period.id == period.id %}
-                <option selected value="{{period.short}}">{{period.description}}</option>
-              {% else %}
-                <option value="{{period.short}}">{{period.description}}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
+      <div class="form-group col-md-3">
+        <label for="start_date">Data início</label>
+        <input type="date" class="form-control" id="start_date" name="start_date"
+          value="{{start_date}}">
       </div>
+      <div class="form-group col-md-3">
+        <label for="end_date">Data fim</label>
+        <input type="date" class="form-control" id="end_date" name="end_date"  
+          value="{{end_date}}">
+      </div>
+    </div>
+  
     <br/>
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>

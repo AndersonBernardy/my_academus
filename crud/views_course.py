@@ -17,8 +17,9 @@ def course_create(request, template_name='crud/course/course_form.html'):
     if form.is_valid():
         form.save()
         return redirect('course_list')
-
-    context = {'action':'create', 'form':form}
+    
+    durations = DurationChoice.objects.all()
+    context = {'action':'create', 'form':form, 'durations': durations}
     return render(request, template_name, context)
 
 

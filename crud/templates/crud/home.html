@@ -90,6 +90,30 @@
         </ul>
       </div>
     </div>
+
+    <div class="col-sm-3">
+      <div class="image-home">
+        <img src="https://image.flaticon.com/icons/svg/235/235252.svg">
+      </div>
+      <br/>
+      <br/>
+      <div>
+        <h3>Relatórios</h3>
+      </div>
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="{% url 'relat_students_in_course' %}">Alunos por curso</a>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'relat_students_in_discipline' %}">Alunos por disciplina</a>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'relat_disciplines_in_course' %}">Disciplinas por curso</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 

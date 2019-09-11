@@ -1,13 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from crud.models import Class
+from crud.models import Class, Discipline
+
+class ClassForm(ModelForm):
+    class Meta:
+        model = Class
+        fields = ['code', 'discipline', 'start_date', 'end_date']
+
 
 
 # ---------- CRUD ----------
 
 def class_create(request, template_name='crud/class/class_form.html'):
-    context = {'action': 'create', }
+    form = ClassForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('class_list')
+        
+    disciplines = Discipline.objects.all()
+    context = {'action':'create', 'form':form, 'disciplines':disciplines}
     return render(request, template_name, context)
 
 
