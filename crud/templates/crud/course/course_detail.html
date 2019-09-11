@@ -21,29 +21,32 @@
     </tbody>
   </table>
 
-  <h3>Disciplinas:</h3><br/>
-  <table class="table table-hover">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Sigla</th>
-        <th scope="col">Nome</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for discipline in disciplines %}
-      <tr>
-        <td>{{ discipline.initials }}</td>
-        <td>{{ discipline.name }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
+  {% if disciplines %}
+    <h4>Disciplinas:</h4>
+    <br/>
+    <table class="table table-hover">
+      <thead class="thead-light">
         <tr>
-          <td><strong>Total: {{disciplines.count}} Disciplinas </strong></td>
-          <td></td>
+          <th scope="col">Sigla</th>
+          <th scope="col">Nome</th>
         </tr>
-      </tfoot>
-  </table>
+      </thead>
+      <tbody>
+        {% for discipline in disciplines %}
+        <tr>
+          <td>{{ discipline.initials }}</td>
+          <td>{{ discipline.name }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+          <tr>
+            <td><strong>Total: {{disciplines.count}} Disciplina(s) </strong></td>
+            <td></td>
+          </tr>
+        </tfoot>
+    </table>
+  {% endif %}
 </div>
 
 {% endblock %}

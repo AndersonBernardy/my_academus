@@ -8,31 +8,31 @@
     {% csrf_token %}
     <fieldset disabled>
       <div class="form-row">
-        <div class="form-group col-md-5">
-          <label for="name">Turma</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Nome" value="{{student.name}}">
+        <div class="form-group col-md-4">
+          <label for="code">Turma</label>
+          <input type="text" class="form-control" id="name" name="code" placeholder="code" value="{{d_class.code}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="discipline">Disciplina</label>
+          <input type="text" class="form-control" id="discipline" name="discipline" placeholder="Nome" 
+            value="{{d_class.discipline.name}}">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-2">
           <label for="start_date">Data de Início</label>
           <input type="date" class="form-control" id="start_date" name="start_date" placeholder="mm/dd/yyyy" 
-          value="{{d_class.start_date}}">
+            value="{{d_class.start_date}}">
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
           <label for="end_date">Data de Encerramento</label>
           <input type="date" class="form-control" id="end_date" name="end_date" placeholder="mm/dd/yyyy"
-          value="{{d_class.end_date}}">
+            value="{{d_class.end_date}}">
         </div>
-      </div>
-      <div class="form-row">
-          <div class="form-group col-md-4">
-          <label for="cpf">Alunos</label>
-          <input type="text" class="form-control" id="course" name="course" placeholder="xxx.xxx.xxx-xx" 
-          value="{{student.course}}">
-          </div>
       </div>
       <br>
     </fieldset>
@@ -45,21 +45,30 @@
         <th scope="col">Registro Acadêmico</th>
         <th scope="col">Nome</th>
         <th scope="col">Notas</th>
+        <th scope="col">Frequência</th>
       </tr>
     </thead>
     <tbody>
-      {% for enrolment in enrolment %}
+      {% for enrolment in enrolments %}
       <tr>
         <td>{{ enrolment.student.registration_number }}</td>
         <td>{{ enrolment.student.name }}</td>
-        <th scope="col">Notas</th>
+        <td>
+          <a href="{% url 'home_page' %}">
+            <img class="image-icon" src="https://image.flaticon.com/icons/svg/159/159604.svg">
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'home_page' %}">
+            <img class="image-icon" src="https://image.flaticon.com/icons/svg/159/159604.svg">
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
     <tfoot>
         <tr>
-          <td><strong>Total: {{course_count}} Cursos </strong></td>
-          <td></td>
+          <td><strong>Total: {{enrolments.count}} Alunos(s) </strong></td>
           <td></td>
           <td></td>
           <td></td>

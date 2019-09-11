@@ -20,9 +20,6 @@ urlpatterns = [
     path('student/edit/<int:pk>', views_student.student_edit, name='student_edit'),
     path('student/delete/<int:pk>', views_student.student_delete, name='student_delete'),
 
-    # path('student/disciplines/<int:pk>', 
-    #     views_student.register_student_in_discipline, name='student_disciplines'),
-
     path('relat/disciplines_in_course', 
         views_discipline.report_disciplines_in_course, name='relat_disciplines_in_course'),
     path('relat/students_in_discipline', 
@@ -32,16 +29,12 @@ urlpatterns = [
 
     path('', views_home.home_page, name='home_page'),
 
-
     path('class/new', views_class.class_create, name='class_create'),
     path('class/view', views_class.class_list, name='class_list'),
     path('class/view/<int:pk>', views_class.class_view, name='class_detail'),
     path('class/edit/<int:pk>', views_class.class_edit, name='class_edit'),
     path('class/delete/<int:pk>', views_class.class_delete, name='class_delete'),
 
-    path('enrolment/new', views_enrolment.enrolment_create, name='enrolment_create'),
-    path('enrolment/view', views_enrolment.enrolment_list, name='enrolment_list'),
-    path('enrolment/view/<int:pk>', views_enrolment.enrolment_view, name='enrolment_detail'),
-    path('enrolment/edit/<int:pk>', views_enrolment.enrolment_edit, name='enrolment_edit'),
-    path('enrolment/delete/<int:pk>', views_enrolment.enrolment_delete, name='enrolment_delete'),
+    path('enrolment/student/<int:pk>', views_enrolment.enrolment_edit, name='enrolment_edit'),
+
 ]

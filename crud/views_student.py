@@ -26,8 +26,10 @@ def student_create(request, template_name='crud/student/student_form.html'):
 
 def student_view(request, pk, template_name='crud/student/student_detail.html'):
     student = get_object_or_404(Student, pk=pk)
-    birthdate = student.birthdate.strftime('%Y-%m-%d')
-    context = {'action':'view', 'student':student, 'birthdate':birthdate}
+    student.birthdate = student.birthdate.strftime('%Y-%m-%d')
+    enrolments = student.enrolment_set.select_related()
+    enrolments.count = 0 + enrolments.count()
+    context = {'action':'view', 'student':student, 'enrolments': enrolments}
     return render(request, template_name, context)
 
 

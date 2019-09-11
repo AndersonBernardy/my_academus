@@ -17,26 +17,55 @@
         <div class="form-group col-md-2">
           <label for="birthdate">Data de Nascimento</label>
           <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="mm/dd/yyyy" 
-          value="{{birthdate}}">
+            value="{{student.birthdate}}">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="cpf">Cpf</label>
           <input type="text" class="form-control" id="cpf" name="cpf" placeholder="xxx.xxx.xxx-xx" 
-          value="{{student.cpf}}">
+            value="{{student.cpf}}">
         </div>
       </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="course">Curso</label>
-            <input type="text" class="form-control" id="course" name="course" placeholder="xxx.xxx.xxx-xx" 
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="course">Curso</label>
+          <input type="text" class="form-control" id="course" name="course" placeholder="xxx.xxx.xxx-xx" 
             value="{{student.course}}">
-          </div>
         </div>
+      </div>
       <br>
     </fieldset>
   </form>
+  {% if enrolments %}
+    <h4>Matrículas:</h4>
+    <br/>
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Turma</th>
+          <th scope="col">Data da Matrícula</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for enrolment in enrolments %}
+        <tr>
+          <td>{{ enrolment.d_class.discipline.name }}</td>
+          <td>{{ enrolment.d_class.code }}</td>
+          <td>{{ enrolment.enrolment_date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+          <tr>
+            <td><strong>Total: {{enrolments.count}} Matrícula(s) </strong></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+    </table>
+  {% endif %}
 </div>
 
 {% endblock %}

@@ -27,7 +27,7 @@
   </form>
   <br/>
 
-  <p><strong>{{ classes.count }} Turma(s)</strong></p>
+  <p><strong>Total: {{ classes.count }} Turma(s)</strong></p>
 
   {% for d_class in classes %}
 
@@ -53,7 +53,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td><strong>Total: {{d_class.student_count}} Alunos </strong></td>
+          <td><strong>Total: {{d_class.student_count}} Aluno(s) </strong></td>
           <td></td>
           <td></td>
         </tr>
