@@ -13,16 +13,6 @@
         <th scope="col">Editar</th>
         <th scope="col">Remover</th>
       </tr>
-      <tfoot>
-      <tr>
-        <td><strong>Total: {{disciplines_count}} Disciplinas </strong></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tfoot>
     </thead>
     <tbody>
       {% for discipline in disciplines %}
@@ -48,6 +38,16 @@
       </tr>
       {% endfor %}
     </tbody>
+    <tfoot>
+      <tr>
+        <td><strong>Total: {{disciplines.count}} Disciplinas </strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
   </table>
 </div>
 

@@ -1,1 +1,49 @@
-<!-- formulario da matricula -->
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+  {% if action == "create" %}
+    <h2>Nova Matrícula</h2><br>
+  {% elif action == "edit" %}
+    <h2>Editar Matrícula</h2><br>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="student">Aluno</label>
+        <select id="student" name="student" class="form-control">
+          <option value="none" selected disabled hidden>Selecione um Aluno</option>
+          {% for student in students %}
+            {% if form.instance.student.registration_number == student.registration_number %}
+              <option selected value="{{student.registration_number}}">{{student}}</option>
+            {% else %}
+              <option value="{{student.registration_number}}">{{student}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="d_class">Turma</label>
+        <select id="d_class" name="d_class" class="form-control">
+          <option value="none" selected disabled hidden>Selecione uma turma</option>
+          {% for d_class in classes %}
+            {% if form.instance.d_class.id == d_class.id %}
+              <option selected value="{{d_class.id}}">{{d_class}}</option>
+            {% else %}
+              <option value="{{d_class.id}}">{{d_class}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -17,6 +17,7 @@ def course_create(request, template_name='crud/course/course_form.html'):
     if form.is_valid():
         form.save()
         return redirect('course_list')
+
     context = {'action':'create', 'form':form}
     return render(request, template_name, context)
 
@@ -24,13 +25,15 @@ def course_create(request, template_name='crud/course/course_form.html'):
 def course_view(request, pk, template_name='crud/course/course_detail.html'):
     course = get_object_or_404(Course, pk=pk)
     disciplines = course.discipline_set.select_related()
-    context = {'action':'list', 'course': course, 'disciplines': disciplines}
+    disciplines.count = 0 + disciplines.count()
+    context = {'action':'view', 'course': course, 'disciplines': disciplines}
     return render(request, template_name, context)
 
 
 def course_list(request, template_name='crud/course/course_list.html'):
     courses = Course.objects.all()
-    context = {'courses': courses, 'courses_count': courses.count()}
+    courses.count = 0 + courses.count()
+    context = {'action':'list', 'courses': courses}
     return render(request, template_name, context)
 
 
@@ -40,6 +43,7 @@ def course_edit(request, pk, template_name='crud/course/course_form.html'):
     if form.is_valid():
         form.save()
         return redirect('course_list')
+
     durations = DurationChoice.objects.all()
     context = {'action':'edit', 'form':form, 'durations': durations}
     return render(request, template_name, context)
@@ -50,5 +54,6 @@ def course_delete(request, pk, template_name='crud/course/course_confirm_delete.
     if request.method=='POST':
         course.delete()
         return redirect('course_list')
+
     context = {'action':'delete', 'course':course}
     return render(request, template_name, context)

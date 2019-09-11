@@ -53,7 +53,7 @@ class Discipline(models.Model):
         ]
 
     def __str__(self):
-        return self.name
+        return self.course.initials + " - " + self.name
 
 
 class Class(models.Model):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from crud.models import Student, Course, Discipline, DurationChoice, PresenceChoice, AcademicPeriod, Class
+from crud.models import Student, Course, Discipline, DurationChoice, PresenceChoice, AcademicPeriod, Class, Enrolment
 
 admin.site.register(Student)
 admin.site.register(Course)
@@ -8,3 +8,4 @@ admin.site.register(DurationChoice)
 admin.site.register(PresenceChoice)
 admin.site.register(AcademicPeriod)
 admin.site.register(Class)
+admin.site.register(Enrolment)

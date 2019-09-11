@@ -7,26 +7,27 @@ from crud.models import Class
 # ---------- CRUD ----------
 
 def class_create(request, template_name='crud/class/class_form.html'):
-    context = {}
+    context = {'action': 'create', }
     return render(request, template_name, context)
 
 
 def class_view(request, pk, template_name='crud/class/class_detail.html'):
-    context = {}
+    context = {'action': 'view', }
     return render(request, template_name, context)
 
 
 def class_list(request, template_name='crud/class/class_list.html'):
     classes = Class.objects.all()
-    context = {'classes': classes, 'classes_count': 0 + classes.count()}
+    classes.count = 0 + classes.count()
+    context = {'action': 'list', 'classes': classes}
     return render(request, template_name, context)
 
 
 def class_edit(request, pk, template_name='crud/class/class_form.html'):
-    context = {}
+    context = {'action': 'edit', }
     return render(request, template_name, context)
 
 
 def class_delete(request, pk, template_name='crud/class/class_confirm_delete.html'):
-    context = {}
+    context = {'action': 'delete', }
     return render(request, template_name, context)

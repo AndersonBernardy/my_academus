@@ -11,53 +11,37 @@
         <div class="form-group col-md-6">
           <label for="name">Nome</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nome"
-          value={{form.instance.name}}>
+          value={{discipline.name}}>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="description">Sigla</label>
           <input type="text" class="form-control" id="initials" name="initials" placeholder="XX" 
-          value={{form.instance.initials}}>
+          value={{discipline.initials}}>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="description">Descrição</label>
           <input type="text" class="form-control" id="description" name="description" placeholder="Descrição" 
-          value={{form.instance.description}}>
+          value={{discipline.description}}>
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
           <label for="course">Curso</label>
-          <select id="course" name="course" class="form-control">
-            <option value="none" selected disabled hidden>Selecione um Curso</option>
-            {% for course in courses %}
-              {% if form.instance.course.id == course.id %}
-                <option selected value="{{course.id}}">{{course}}</option>
-              {% else %}
-                <option value="{{course.id}}">{{course}}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
+          <input type="text" class="form-control" id="course" name="course" placeholder="Curso" 
+          value={{discipline.course}}>
         </div>
       </div>
       <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="academic_period">Período</label>
-            <select id="academic_period" name="academic_period" class="form-control">
-              <option value="none" selected disabled hidden>Selecione um Período</option>
-              {% for period in periods %}
-                {% if form.instance.period.id == period.id %}
-                  <option selected value="{{period.short}}">{{period.description}}</option>
-                {% else %}
-                  <option value="{{period.short}}">{{period.description}}</option>
-                {% endif %}
-              {% endfor %}
-            </select>
-          </div>
+        <div class="form-group col-md-6">
+          <label for="academic_period">Período</label>
+          <input type="text" class="form-control" id="academic_period" name="academic_period" placeholder="Período" 
+          value={{discipline.academic_period.description}}>
         </div>
+      </div>
       <br/>
     </fieldset>
   </form>

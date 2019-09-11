@@ -29,15 +29,21 @@
         <th scope="col">Nome</th>
       </tr>
     </thead>
-      <tbody>
-        {% for discipline in disciplines %}
+    <tbody>
+      {% for discipline in disciplines %}
+      <tr>
+        <td>{{ discipline.initials }}</td>
+        <td>{{ discipline.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
         <tr>
-          <td>{{ discipline.initials }}</td>
-          <td>{{ discipline.name }}</td>
+          <td><strong>Total: {{disciplines.count}} Disciplinas </strong></td>
+          <td></td>
         </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      </tfoot>
+  </table>
 </div>
 
 {% endblock %}

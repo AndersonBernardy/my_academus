@@ -1,1 +1,71 @@
-<!-- detalhe da turma -->
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+
+  <form>
+    {% csrf_token %}
+    <fieldset disabled>
+      <div class="form-row">
+        <div class="form-group col-md-5">
+          <label for="name">Turma</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nome" value="{{student.name}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="start_date">Data de Início</label>
+          <input type="date" class="form-control" id="start_date" name="start_date" placeholder="mm/dd/yyyy" 
+          value="{{d_class.start_date}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="end_date">Data de Encerramento</label>
+          <input type="date" class="form-control" id="end_date" name="end_date" placeholder="mm/dd/yyyy"
+          value="{{d_class.end_date}}">
+        </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-4">
+          <label for="cpf">Alunos</label>
+          <input type="text" class="form-control" id="course" name="course" placeholder="xxx.xxx.xxx-xx" 
+          value="{{student.course}}">
+          </div>
+      </div>
+      <br>
+    </fieldset>
+  </form>
+  <h3>Alunos Matriculados:</h3>
+  <br/>
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Registro Acadêmico</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Notas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for enrolment in enrolment %}
+      <tr>
+        <td>{{ enrolment.student.registration_number }}</td>
+        <td>{{ enrolment.student.name }}</td>
+        <th scope="col">Notas</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+          <td><strong>Total: {{course_count}} Cursos </strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+  </table>
+</div>
+
+{% endblock %}
