@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-
+  <h4>Informações Pessoais:</h4><br/>
   <form>
     {% csrf_token %}
     <fieldset disabled>
@@ -12,8 +12,6 @@
           <label for="name">Nome</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nome" value="{{student.name}}">
         </div>
-      </div>
-      <div class="form-row">
         <div class="form-group col-md-2">
           <label for="birthdate">Data de Nascimento</label>
           <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="mm/dd/yyyy" 
@@ -21,13 +19,11 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
           <label for="cpf">Cpf</label>
           <input type="text" class="form-control" id="cpf" name="cpf" placeholder="xxx.xxx.xxx-xx" 
             value="{{student.cpf}}">
         </div>
-      </div>
-      <div class="form-row">
         <div class="form-group col-md-4">
           <label for="course">Curso</label>
           <input type="text" class="form-control" id="course" name="course" placeholder="xxx.xxx.xxx-xx" 
@@ -38,8 +34,7 @@
     </fieldset>
   </form>
   {% if enrolments %}
-    <h4>Matrículas:</h4>
-    <br/>
+    <h4>Disciplinas matriculadas:</h4><br/>
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>

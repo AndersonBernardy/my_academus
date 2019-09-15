@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-  <h2>Matrículas</h2><br>
+  <h2>Matrículas</h2></br>
 
   <form method="post">
     {% csrf_token %}
@@ -17,6 +17,7 @@
       </div>
     </fieldset>
 
+  </br><h2>Turmas Matriculadas</h2>
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>
@@ -35,8 +36,10 @@
           <td>{{ d_class.start_date }}</td>
           <td>{{ d_class.end_date }}</td>
           <td>
-              <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149706.svg">
-          </td>
+            <a href="#">
+              <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/149/149706.svg">
+            </a>
+            </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -51,6 +54,7 @@
       </tfoot>
     </table>
 
+    </br><h2>Turmas Disponíveis</h2>
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>
@@ -69,7 +73,9 @@
           <td>{{ d_class.start_date }}</td>
           <td>{{ d_class.end_date }}</td>
           <td>
-              <img class="image-icon" src="https://image.flaticon.com/icons/svg/109/109526.svg">
+            <a href="#">
+              <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/109/109526.svg">
+            </a>
           </td>
         </tr>
         {% endfor %}
