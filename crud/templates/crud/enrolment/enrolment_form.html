@@ -12,26 +12,79 @@
         <div class="form-group col-md-4">
           <label for="student">Aluno</label>
           <input type="text" class="form-control" id="student" name="student" placeholder="Aluno" 
-          value="[{{student.registration_number}}] {{student.name}}">
+          value="{{student.name}}">
         </div>
       </div>
     </fieldset>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="d_class">Turma</label>
-        <select multiple id="d_class" name="d_class" class="form-control">
-          <option value="none" selected disabled hidden>Selecione uma turma</option>
-          {% for d_class in classes %}
-            {% if form.instance.d_class.id == d_class.id %}
-              <option selected value="{{d_class.id}}">{{d_class}}</option>
-            {% else %}
-              <option value="{{d_class.id}}">{{d_class}}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-    <br>
+
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Turma</th>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Data de Início</th>
+          <th scope="col">Data de Encerramento</th>
+          <th scope="col">Remover Matrícula</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d_class in student.persisted_classes %}
+        <tr>
+          <td>{{ d_class.code }}</td>
+          <td>{{ d_class.discipline.name }}</td>
+          <td>{{ d_class.start_date }}</td>
+          <td>{{ d_class.end_date }}</td>
+          <td>
+              <img class="image-icon" src="https://image.flaticon.com/icons/svg/149/149706.svg">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>Total: {{student.count}} Disciplina(s) Matriculada(s) </strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Turma</th>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Data de Início</th>
+          <th scope="col">Data de Encerramento</th>
+          <th scope="col">Adicionar Matrícula</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d_class in available_classes %}
+        <tr>
+          <td>{{ d_class.code }}</td>
+          <td>{{ d_class.discipline.name }}</td>
+          <td>{{ d_class.start_date }}</td>
+          <td>{{ d_class.end_date }}</td>
+          <td>
+              <img class="image-icon" src="https://image.flaticon.com/icons/svg/109/109526.svg">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>Total: {{available_classes.count}} Disponível(is) </strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 
