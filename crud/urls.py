@@ -37,4 +37,7 @@ urlpatterns = [
 
     path('enrolment/student/<int:pk>', views_enrolment.enrolment_edit, name='enrolment_edit'),
 
+    path('class/student/grades/list/<int:pk>', views_class.grade_list, name='grade_list'),
+    path('class/student/grades/edit/<int:pk>', views_class.grade_edit, name='grade_edit'),
+
 ]

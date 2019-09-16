@@ -76,6 +76,9 @@ class Enrolment(models.Model):
     d_class = models.ForeignKey(Class, on_delete=models.PROTECT)
     enrolment_date = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+        return self.student.name + " (" + self.d_class.code + ")"
+
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['d_class', 'student'], name='unique_enrolment')
@@ -102,11 +105,24 @@ class Frequency(models.Model):
 
 
 class Assessment(models.Model):
-    assessment_number = models.IntegerField()
-    grade = models.DecimalField(max_digits=5, decimal_places=2)
-    enrolment = models.ForeignKey(Enrolment, on_delete=models.CASCADE)
+    assessment_name = models.CharField(max_length=32)
+    d_class = models.ForeignKey(Class, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.assessment_name + " (" + self.d_class.code + ")"
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['assessment_number', 'enrolment'], name='assessment_enrolment')
+            models.UniqueConstraint(fields=['assessment_name', 'd_class'], name='assessment_class')
+        ]
+
+
+class Grade(models.Model):
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='grade_set')
+    grade = models.DecimalField(max_digits=5, decimal_places=2)
+    enrolment = models.ForeignKey(Enrolment, on_delete=models.CASCADE, related_name='grade_set')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['assessment', 'enrolment'], name='assessment_enrolment')
         ]

@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from crud.models import Class, Discipline
+from crud.models import Class, Discipline, Enrolment, Assessment, Grade
+
 
 class ClassForm(ModelForm):
     class Meta:
         model = Class
         fields = ['code', 'discipline', 'start_date', 'end_date']
-
 
 
 # ---------- CRUD ----------
@@ -47,4 +47,41 @@ def class_edit(request, pk, template_name='crud/class/class_form.html'):
 
 def class_delete(request, pk, template_name='crud/class/class_confirm_delete.html'):
     context = {'action': 'delete', }
+    return render(request, template_name, context)
+
+
+# ---------- GRADES ----------
+
+class GradeForm(ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['grade']
+
+
+def grade_list(request, pk, template_name='crud/grades/grade_list.html'):
+    enrolment = get_object_or_404(Enrolment, pk=pk)
+    assessments = enrolment.d_class.assessment_set.select_related()
+
+    for assessment in assessments:
+        grade = assessment.grade_set.select_related().first()
+        if(grade == None):
+            grade = Grade.objects.create(enrolment=enrolment, assessment=assessment, grade=0)
+        assessment.result = grade
+
+    context = {'action': 'list', 'enrolment': enrolment, 'assessments': assessments}
+    return render(request, template_name, context)
+
+
+def grade_edit(request, pk, template_name='crud/grades/grade_edit.html'):
+    grade = get_object_or_404(Grade, pk=pk)
+    context = {'action:': 'edit', 'grade': grade}
+
+    for k,v in request.POST.items():
+        print(k, v)
+
+    form = GradeForm(request.POST or None, instance=grade)
+    if form.is_valid():
+        form.save()
+        return redirect("grade_list", pk=grade.enrolment.id)
+
     return render(request, template_name, context)

@@ -15,10 +15,10 @@ class EnrolmentForm(ModelForm):
 def enrolment_edit(request, pk, template_name='crud/enrolment/enrolment_form.html'):
     student = get_object_or_404(Student, pk=pk)
     student.persisted_classes = [enrolment.d_class for enrolment in student.enrolment_set.select_related()]
-    print(student.persisted_classes)
 
     if request.method == 'POST':
         selected_classes = request.POST.getlist('selected_classes')
+        print(selected_classes)
 
     # form = EnrolmentForm(request.POST or None)
     # if form.is_valid():
