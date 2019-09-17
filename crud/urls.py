@@ -40,4 +40,6 @@ urlpatterns = [
     path('class/student/grades/list/<int:pk>', views_class.grade_list, name='grade_list'),
     path('class/student/grades/edit/<int:pk>', views_class.grade_edit, name='grade_edit'),
 
+    path('class/student/frequency/list/<int:pk>', views_class.frequency_list, name='frequency_list'),
+    path('class/student/frequency/edit/<int:pk>', views_class.frequency_edit, name='frequency_edit'),
 ]

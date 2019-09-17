@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 
 class DurationChoice(models.Model):
     short = models.CharField(max_length=10, primary_key=True)
@@ -20,10 +20,15 @@ class Course(models.Model):
 
 
 class Student(models.Model):
+    def validate_cpf(cpf):
+        if len(cpf) < 11 or len(cpf) > 14:
+            raise ValidationError("CPF inválido: %s".format(cpf))
+        return True
+
     registration_number = models.AutoField(primary_key=True)
     registration_date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=120)
-    cpf = models.CharField(max_length=30, unique=True)
+    cpf = models.CharField(max_length=30, unique=True, validators=[validate_cpf])
     birthdate = models.DateField()
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
 
@@ -118,8 +123,13 @@ class Assessment(models.Model):
 
 
 class Grade(models.Model):
+    def validate_grade(grade):
+        if(grade < 0 or grade > 100):
+            raise ValidationError("Nota inválida: %d".format(grade))
+        return True
+
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='grade_set')
-    grade = models.DecimalField(max_digits=5, decimal_places=2)
+    grade = models.DecimalField(max_digits=4, decimal_places=1, validators=[validate_grade])
     enrolment = models.ForeignKey(Enrolment, on_delete=models.CASCADE, related_name='grade_set')
 
     class Meta:

@@ -25,7 +25,7 @@ def enrolment_edit(request, pk, template_name='crud/enrolment/enrolment_form.htm
     #     form.save()
     #     return redirect('home_page')
 
-    available_classes = Class.objects.filter(discipline__course__id = student.course.id)
+    available_classes = Class.objects.filter(discipline__course__id=student.course.id)
     available_classes.count = 0 + available_classes.count()
     student.count = len(student.persisted_classes)
     context = {'action':'edit', 'student': student, 'available_classes': available_classes}

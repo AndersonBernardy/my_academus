@@ -60,12 +60,12 @@ class GradeForm(ModelForm):
 
 def grade_list(request, pk, template_name='crud/grades/grade_list.html'):
     enrolment = get_object_or_404(Enrolment, pk=pk)
-    assessments = enrolment.d_class.assessment_set.select_related()
+    assessments = Assessment.objects.filter(d_class=enrolment.d_class)
 
     for assessment in assessments:
-        grade = assessment.grade_set.select_related().first()
+        grade = Grade.objects.filter(assessment=assessment, enrolment=enrolment).first()
         if(grade == None):
-            grade = Grade.objects.create(enrolment=enrolment, assessment=assessment, grade=0)
+            grade = Grade.objects.create(enrolment=enrolment, assessment=assessment, grade=0.0)
         assessment.result = grade
 
     context = {'action': 'list', 'enrolment': enrolment, 'assessments': assessments}
@@ -84,4 +84,15 @@ def grade_edit(request, pk, template_name='crud/grades/grade_edit.html'):
         form.save()
         return redirect("grade_list", pk=grade.enrolment.id)
 
+    return render(request, template_name, context)
+
+
+# ---------- GRADES ----------
+
+def frequency_list(request, pk, template_name='crud/frequency/frequency_list.html'):
+    context = {'action': 'list', }
+    return render(request, template_name, context)
+
+def frequency_edit(request, pk, template_name='crud/frequency/frequency_edit.html'):
+    context = {'action': 'edit', }
     return render(request, template_name, context)
