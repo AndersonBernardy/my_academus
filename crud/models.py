@@ -101,11 +101,11 @@ class PresenceChoice(models.Model):
 class Frequency(models.Model):
     presence = models.ForeignKey(PresenceChoice, on_delete=models.PROTECT)
     class_time = models.ForeignKey(ClassTime, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    enrolment = models.ForeignKey(Enrolment, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['class_time', 'student'], name='unique_frequency')
+            models.UniqueConstraint(fields=['class_time', 'enrolment'], name='unique_frequency')
         ]
 
 

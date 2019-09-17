@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from crud.models import Class, Discipline, Enrolment, Assessment, Grade
+from crud.models import Class, Discipline, Enrolment, Assessment, Grade, ClassTime, Frequency, PresenceChoice
 
 
 class ClassForm(ModelForm):
@@ -76,9 +76,6 @@ def grade_edit(request, pk, template_name='crud/grades/grade_edit.html'):
     grade = get_object_or_404(Grade, pk=pk)
     context = {'action:': 'edit', 'grade': grade}
 
-    for k,v in request.POST.items():
-        print(k, v)
-
     form = GradeForm(request.POST or None, instance=grade)
     if form.is_valid():
         form.save()
@@ -89,10 +86,35 @@ def grade_edit(request, pk, template_name='crud/grades/grade_edit.html'):
 
 # ---------- GRADES ----------
 
+class FrequencyForm(ModelForm):
+    class Meta:
+        model = Frequency
+        fields = ['presence']
+
+
 def frequency_list(request, pk, template_name='crud/frequency/frequency_list.html'):
-    context = {'action': 'list', }
+    enrolment = get_object_or_404(Enrolment, pk=pk)
+    class_times = ClassTime.objects.filter(d_class=enrolment.d_class)
+
+    for class_time in class_times:
+        frequency = Frequency.objects.filter(class_time=class_time, enrolment=enrolment).first()
+        if(frequency == None):
+            presence = PresenceChoice.objects.filter(short="*").first()
+            frequency = Frequency.objects.create(class_time=class_time, enrolment=enrolment, presence=presence)
+        class_time.frequency = frequency
+
+    context = {'action': 'list', 'enrolment': enrolment, 'class_times': class_times}
     return render(request, template_name, context)
 
+
 def frequency_edit(request, pk, template_name='crud/frequency/frequency_edit.html'):
-    context = {'action': 'edit', }
+    frequency = get_object_or_404(Frequency, pk=pk)
+    presence_choices = PresenceChoice.objects.all()
+    form = FrequencyForm(request.POST or None, instance=frequency)
+
+    if form.is_valid():
+        form.save()
+        return redirect("frequency_list", pk=frequency.enrolment.id)
+
+    context = {'action:': 'edit', 'frequency': frequency, 'presence_choices': presence_choices, 'form': form}
     return render(request, template_name, context)
