@@ -5,9 +5,7 @@
 <div class="container">
   <h2>Matrículas</h2></br>
 
-  <form method="post">
-    {% csrf_token %}
-    <fieldset disabled>
+  <fieldset disabled>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="student">Aluno</label>
@@ -17,9 +15,47 @@
       </div>
     </fieldset>
 
-    </br>
+</br><h2>Turmas Disponíveis</h2>
+  
+<table class="table table-hover" id="disciplinas_disponiveis">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Turma</th>
+      <th scope="col">Disciplina</th>
+      <th scope="col">Data de Início</th>
+      <th scope="col">Data de Encerramento</th>
+      <th scope="col">Adicionar Matrícula</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d_class in available_classes %}
+    <tr>
+      <td><input type="hidden" name="d_class_code[]" value="{{d_class.code}}">{{ d_class.code }}</td>
+      <td>{{ d_class.discipline.name }}</td>
+      <td>{{ d_class.start_date }}</td>
+      <td>{{ d_class.end_date }}</td>
+      <td class="text-center">
+        <input class="checkbox" type="checkbox" name="add">
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <!-- <tfoot>
+    <tr>
+      <td><strong>Total: {{available_classes.count}} Disponível(is) </strong></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot> -->
+</table>
+<br/>
+
+  <form method="post">
+    {% csrf_token %}
     <h2>Turmas Matriculadas</h2>
-    <table class="table table-hover">
+    <table class="table table-hover" id="disciplinas_matriculadas">
       <thead class="thead-light">
         <tr>
           <th scope="col">Turma</th>
@@ -32,19 +68,18 @@
       <tbody>
         {% for d_class in student.persisted_classes %}
         <tr>
-          <td>{{ d_class.code }}</td>
+          <td><input type="hidden" name="d_class_code[]" value="{{d_class.code}}">{{ d_class.code }}</td>
           <td>{{ d_class.discipline.name }}</td>
           <td>{{ d_class.start_date }}</td>
           <td>{{ d_class.end_date }}</td>
-          <td>
-            <a href="#">
-              <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/149/149706.svg">
-            </a>
-            </td>
+          <td class="text-center">
+            <input class="checkbox" type="checkbox" checked="checked" name="add">
+          </td>
         </tr>
         {% endfor %}
+       
       </tbody>
-      <tfoot>
+      <!-- <tfoot>
         <tr>
           <td><strong>Total: {{student.count}} Matriculada(s)</strong></td>
           <td></td>
@@ -52,56 +87,40 @@
           <td></td>
           <td></td>
         </tr>
-      </tfoot>
+      </tfoot> -->
     </table>
-
-    </br><h2>Turmas Disponíveis</h2>
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Turma</th>
-          <th scope="col">Disciplina</th>
-          <th scope="col">Data de Início</th>
-          <th scope="col">Data de Encerramento</th>
-          <th scope="col">Adicionar Matrícula</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for d_class in available_classes %}
-        <tr>
-          <td>{{ d_class.code }}</td>
-          <td>{{ d_class.discipline.name }}</td>
-          <td>{{ d_class.start_date }}</td>
-          <td>{{ d_class.end_date }}</td>
-          <td>
-            <a href="#" onclick="f()">
-              <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/109/109526.svg">
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td><strong>Total: {{available_classes.count}} Disponível(is) </strong></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
-
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 
+    
+    
 
-  <script>
-    function f() {
-      console.log("Hello World!");
-    }
-  </script>
+
+<script>
+  //consultando todos os input to type checkbox na pagina
+  //caso a sua pagina possua mais inputs deste tipo, você deve tornar o filtro abaixo mais especifico.
+  var adicionar = document.querySelectorAll("input[type='checkbox']");
+
+  //consultando as tabelas que irão armazenar as disciplinas disponiveis e as que o aluno está matriculado.
+  var matriculado = document.querySelector("#disciplinas_matriculadas tbody");
+  var disponiveis = document.querySelector("#disciplinas_disponiveis tbody");
+
+  //definindo o evento que irá mover a linha, é importante instanciar apenas um evento para todos os checkbox.
+  var adicionarOnClick = function () {
+      //caso o checkbox esteja marcado, mova a linha para a tabela de matriculados, caso contrario para a tabela de disciplinas disponiveis.
+      var escopo = this.checked ? matriculado : disponiveis;
+      //this é o checkbox que foi clickado, o parentNode dele é a celula atual, e o parentNode da celula é a linha (arvore).
+      escopo.appendChild(this.parentNode.parentNode);
+  };
+
+  //registrando o evento criado acima para todos os checkbox.
+  for (var indice in adicionar) {
+      adicionar[indice].onclick = adicionarOnClick;
+  }
+</script>
+
 
 </div>
 
 {% endblock %}
+

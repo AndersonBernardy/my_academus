@@ -17,6 +17,8 @@ def enrolment_edit(request, pk, template_name='crud/enrolment/enrolment_form.htm
     student.persisted_classes = [enrolment.d_class for enrolment in student.enrolment_set.select_related()]
 
     if request.method == 'POST':
+        for x in request.POST.getlist('d_class_code[]'):
+            print (x)
         selected_classes = request.POST.getlist('selected_classes')
         print(selected_classes)
 
