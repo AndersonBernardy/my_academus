@@ -3,10 +3,16 @@
 {% block content %}
 
 <div class="container">
-  <h2>{{enrolment.student.name}}</h2><br/>
-  <h2>{{enrolment.d_class.code}}</h2><br/>
-  <h2>{{enrolment.d_class.discipline}}</h2><br/>
-
+  <h4>Aluno: {{enrolment.student.name}}</h4><br/>
+  <div class="row">
+    <div class="col-sm">
+      <h6>Disciplina: {{enrolment.d_class.discipline}}</h6>
+    </div>
+    <div class="col-sm">
+      <h6>Turma: {{enrolment.d_class.code}}</h6>
+    </div>
+  </div>
+  </br>
   <form method="post">
     {% csrf_token %}
     <table class="table table-hover">

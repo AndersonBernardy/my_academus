@@ -9,10 +9,10 @@
     <div class="form-group col-md-4">
         <label for="presence">Duração</label>
         <select id="presence" name="presence" class="form-control">
-            <option value="none" selected disabled hidden>Selecione uma Presença</option>
+            <option value="none" selected disabled>Selecione uma opção</option>
             {% for presence in presence_choices %}
                 {% if form.instance.presence.short == presence.short %}
-                    <option selected value="{{presence.short}}">{{presence.description}}</option>
+                    <option value="{{presence.short}}">{{presence.description}}</option>
                 {% else %}
                     <option value="{{presence.short}}">{{presence.description}}</option>
                 {% endif %}

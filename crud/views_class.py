@@ -84,7 +84,7 @@ def grade_edit(request, pk, template_name='crud/grades/grade_edit.html'):
     return render(request, template_name, context)
 
 
-# ---------- GRADES ----------
+# ---------- FREQUENCY ----------
 
 class FrequencyForm(ModelForm):
     class Meta:
