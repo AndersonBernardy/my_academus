@@ -46,26 +46,48 @@
     </div>
     {% if action == "create" %}
     <div class="" id="assessments">
-      <label for="name">Avaliações</label>
-      {% for assessment in form.instance.assessments %}
-        <div class="form-row" id="assessment_div">
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" name="assessment" placeholder="Avaliação" value="{{assessment.assessment_name}}">
-          </div>
-        </div>
-      {% endfor %}
-
+      <label for="assessment[]">Avaliações</label>
       <div class="form-row" id="assessment_div">
-        <div class="form-group col-md-4">
-          <input type="text" class="form-control" name="assessment" placeholder="Avaliação" value="{{form.instance.assessment.assessment_name}}">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" name="assessment[]" placeholder="Avaliação" value="{{form.instance.assessment.assessment_name}}">
         </div>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-5">
-        <button type="button" id="addAssessment" class="btn btn-outline-primary font-weight-bold">Adicionar nova avaliação</button>
+        <button type="button" id="add_assessment" class="btn btn-outline-primary font-weight-bold">Adicionar nova avaliação</button>
       </div>
     </div>
+    
+    <div id="class_time">
+      <div class="form-row" id="class_time_div">
+        <div class="form-group col-md-3">
+          <label for="class_week[]">Dia da semana</label>
+          <select id="class_week" name="class_week[]" class="form-control">
+            <option value="none" selected disabled hidden>Selecione um dia da semana</option>
+            <option value="6">Domingo</option>
+            <option value="0">Segunda</option>
+            <option value="1">Terça</option>
+            <option value="2">Quarta</option>
+            <option value="3">Quinta</option>
+            <option value="4">Sexta</option>
+            <option value="5">Sábado</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="class_time[]">Horário de aula</label>
+          <input type="time" class="form-control" name="class_time[]" value="{{form.instance.assessment.assessment_name}}">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <button type="button" id="add_class_time" class="btn btn-outline-primary font-weight-bold">Adicionar novo dia de aula</button>
+      </div>
+    </div>
+
     {% endif %}
     <br/>
     <button type="submit" class="btn btn-primary">Salvar</button>
@@ -74,9 +96,18 @@
 
 <script>
   $(function(){
-    $('#addAssessment').on('click', function(){
+    $('#add_assessment').on('click', function(){
       $('#assessment_div:first').clone().appendTo('#assessments');
       $('#assessment_div:last-child div input').val('');
+    });
+  });
+</script>
+
+<script>
+  $(function(){
+    $('#add_class_time').on('click', function(){
+      $('#class_time_div:first').clone().appendTo('#class_time');
+      $('#class_time_div:last-child div input').val('');
     });
   });
 </script>

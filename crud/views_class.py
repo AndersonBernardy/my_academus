@@ -16,7 +16,7 @@ def class_create(request, template_name='crud/class/class_form.html'):
     form = ClassForm(request.POST or None)
     if form.is_valid():
         d_class = form.save()
-        for assessment_name in filter(None, request.POST.getlist('assessment')):
+        for assessment_name in filter(None, request.POST.getlist('assessment[]')):
             Assessment.objects.create(assessment_name=assessment_name, d_class=d_class)
         return redirect('class_list')
         
