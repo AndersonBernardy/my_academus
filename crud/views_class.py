@@ -15,7 +15,9 @@ class ClassForm(ModelForm):
 def class_create(request, template_name='crud/class/class_form.html'):
     form = ClassForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        d_class = form.save()
+        for assessment_name in filter(None, request.POST.getlist('assessment')):
+            Assessment.objects.create(assessment_name=assessment_name, d_class=d_class)
         return redirect('class_list')
         
     disciplines = Discipline.objects.all()
@@ -41,12 +43,26 @@ def class_list(request, template_name='crud/class/class_list.html'):
 
 
 def class_edit(request, pk, template_name='crud/class/class_form.html'):
-    context = {'action': 'edit', }
+    d_class = get_object_or_404(Class, pk=pk)
+    start_date = d_class.start_date.strftime('%Y-%m-%d')
+    end_date = d_class.end_date.strftime('%Y-%m-%d')
+
+    form = ClassForm(request.POST or None, instance=d_class)
+    if form.is_valid():
+        form.save()
+        return redirect('class_list')
+
+    disciplines = Discipline.objects.all()
+    context = {'action':'edit', 'form':form, 'disciplines':disciplines, 'start_date': start_date, 'end_date': end_date}
     return render(request, template_name, context)
 
 
 def class_delete(request, pk, template_name='crud/class/class_confirm_delete.html'):
-    context = {'action': 'delete', }
+    d_class = get_object_or_404(Class, pk=pk)
+    if request.method == 'POST':
+        d_class.delete()
+        return redirect('class_list')
+    context = {'action': 'delete', 'd_class': d_class}
     return render(request, template_name, context)
 
 

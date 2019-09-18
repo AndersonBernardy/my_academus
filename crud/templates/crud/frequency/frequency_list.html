@@ -3,9 +3,24 @@
 {% block content %}
 
 <div class="container">
-  <h2>{{enrolment.student.name}}</h2><br/>
-  <h2>{{enrolment.d_class.code}}</h2><br/>
-  <h2>{{enrolment.d_class.discipline}}</h2><br/>
+  <div class="row">
+    <div class="col-md-6 col-sm">
+      <h6><b>Aluno:</b> {{enrolment.student.name}}</h6>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <div class="col-md-2 col-sm">
+      <h6><b>Turma:</b> {{enrolment.d_class.code}}</h6>
+    </div>
+    <div class="col-md-4 col-sm">
+      <h6><b>Disciplina:</b> {{enrolment.d_class.discipline.name}}</h6>
+    </div>
+    <div class="col-md-4 col-sm">
+      <h6><b>Curso:</b> {{enrolment.d_class.discipline.course}}</h6>
+    </div>
+  </div>
+  </br>
 
   <form method="post">
     {% csrf_token %}

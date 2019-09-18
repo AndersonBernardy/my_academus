@@ -2,18 +2,12 @@
 
 {% block content %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<script>
-  $(function(){
-    $('button').on('click', function(){
-      $('#assessments:first').clone().insertAfter('#assessments:last');
-    });
-  });
-</script>
-
 <div class="container">
-  <h2>Nova Turma</h2><br/>
+  {% if action == "create" %}
+    <h2>Nova Turma</h2><br/>
+  {% elif action == "edit" %}
+    <h2>Editar Turma</h2><br/>
+  {% endif %}
 
   <form method="post">
     {% csrf_token %}
@@ -50,22 +44,41 @@
           value="{{end_date}}">
       </div>
     </div>
-    <div class="form-row" id="assessments">
-      <div class="form-group col-md-6">
-        <label for="name">Avaliação</label>
-        <input type="text" class="form-control" id="assessment" name="assessments[]" placeholder="Avaliação" value="{{form.instance.assessment}}">
+    {% if action == "create" %}
+    <div class="" id="assessments">
+      <label for="name">Avaliações</label>
+      {% for assessment in form.instance.assessments %}
+        <div class="form-row" id="assessment_div">
+          <div class="form-group col-md-4">
+            <input type="text" class="form-control" name="assessment" placeholder="Avaliação" value="{{assessment.assessment_name}}">
+          </div>
+        </div>
+      {% endfor %}
+
+      <div class="form-row" id="assessment_div">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" name="assessment" placeholder="Avaliação" value="{{form.instance.assessment.assessment_name}}">
+        </div>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-5">
-        <button type="button" class="btn btn-outline-primary font-weight-bold addAssessment">Adicionar nova avaliação</button>
+        <button type="button" id="addAssessment" class="btn btn-outline-primary font-weight-bold">Adicionar nova avaliação</button>
       </div>
     </div>
-  
+    {% endif %}
     <br/>
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 </div>
 
+<script>
+  $(function(){
+    $('#addAssessment').on('click', function(){
+      $('#assessment_div:first').clone().appendTo('#assessments');
+      $('#assessment_div:last-child div input').val('');
+    });
+  });
+</script>
 
 {% endblock %}
