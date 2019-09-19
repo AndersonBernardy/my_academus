@@ -17,18 +17,23 @@ def enrolment_edit(request, pk, template_name='crud/enrolment/enrolment_form.htm
     student.persisted_classes = [enrolment.d_class for enrolment in student.enrolment_set.select_related()]
 
     if request.method == 'POST':
-        for x in request.POST.getlist('d_class_code[]'):
-            print (x)
-        selected_classes = request.POST.getlist('selected_classes')
-        print(selected_classes)
+        persisted_classes = set(d_class.code for d_class in student.persisted_classes)
+        selected_classes =  set(request.POST.getlist('d_class_code[]'))
+        classes_to_remove = persisted_classes - selected_classes
+        classes_to_add = selected_classes - persisted_classes
+        print(classes_to_remove)
+        print(classes_to_add)
 
-    # form = EnrolmentForm(request.POST or None)
-    # if form.is_valid():
-    #     form.save()
-    #     return redirect('home_page')
+        for code in classes_to_add:
+            d_class = Class.objects.filter(code=code).first()
+            Enrolment.objects.create(student=student, d_class=d_class)
 
-    available_classes = Class.objects.filter(discipline__course__id=student.course.id)
-    available_classes.count = 0 + available_classes.count()
-    student.count = len(student.persisted_classes)
+        for code in classes_to_remove:
+            d_class = Class.objects.filter(code=code).first()
+            Enrolment.objects.filter(d_class=d_class, student=student).delete()
+
+        return redirect('student_list')
+
+    available_classes = set(Class.objects.filter(discipline__course__id=student.course.id)) - set(student.persisted_classes)
     context = {'action':'edit', 'student': student, 'available_classes': available_classes}
     return render(request, template_name, context)
