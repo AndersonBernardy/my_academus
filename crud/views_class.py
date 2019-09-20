@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
+import calendar
+import datetime
 
 from crud.models import Class, Discipline, Enrolment, Assessment, Grade, ClassTime, Frequency, PresenceChoice
 
@@ -13,13 +15,30 @@ class ClassForm(ModelForm):
 # ---------- CRUD ----------
 
 def class_create(request, template_name='crud/class/class_form.html'):
+
     form = ClassForm(request.POST or None)
     if form.is_valid():
         d_class = form.save()
+
         for assessment_name in filter(None, request.POST.getlist('assessment[]')):
             Assessment.objects.create(assessment_name=assessment_name, d_class=d_class)
+
+        class_week = [int(week_day) for week_day in request.POST.getlist('class_week[]')]
+        class_time = [datetime.datetime.strptime(time, "%H:%M") for time in request.POST.getlist('class_time[]')]
+
+        for year in range(d_class.start_date.year, d_class.end_date.year + 1):
+            for month in range(d_class.start_date.month, d_class.end_date.month + 1):
+                cal = calendar.monthcalendar(year, month)
+                for week in cal:
+                    for week_day, time in zip(class_week, class_time):
+                        if(week[week_day]) != 0:
+                            class_datetime = datetime.datetime(year, month, week[week_day], time.hour, time.minute, time.second)
+                            d = datetime.date(year, month, week[week_day])
+                            if d > d_class.start_date and d < d_class.end_date:
+                                ClassTime.objects.create(class_datetime=class_datetime, d_class=d_class)
+
         return redirect('class_list')
-        
+
     disciplines = Discipline.objects.all()
     context = {'action':'create', 'form':form, 'disciplines':disciplines}
     return render(request, template_name, context)

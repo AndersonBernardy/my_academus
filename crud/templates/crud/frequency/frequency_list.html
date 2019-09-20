@@ -38,7 +38,7 @@
           <td>{{ class_time.class_datetime }}</td>
           <td>{{ class_time.frequency.presence }}</td>
           <td>
-            <a href="{% url 'frequency_edit' class_time.id %}">
+            <a href="{% url 'frequency_edit' class_time.frequency.id %}">
               <img class="image-icon d-block" src="https://image.flaticon.com/icons/svg/149/149850.svg">
             </a>
           </td>

@@ -21,8 +21,6 @@ def enrolment_edit(request, pk, template_name='crud/enrolment/enrolment_form.htm
         selected_classes =  set(request.POST.getlist('d_class_code[]'))
         classes_to_remove = persisted_classes - selected_classes
         classes_to_add = selected_classes - persisted_classes
-        print(classes_to_remove)
-        print(classes_to_add)
 
         for code in classes_to_add:
             d_class = Class.objects.filter(code=code).first()

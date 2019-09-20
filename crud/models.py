@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+
 class DurationChoice(models.Model):
     short = models.CharField(max_length=10, primary_key=True)
     description = models.CharField(max_length=32)
