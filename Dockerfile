@@ -3,6 +3,9 @@ FROM python:3.7
 WORKDIR /usr/src/app
 COPY . .
 
+RUN apt update
+RUN apt install libmariadbclient-dev
+
 COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 
