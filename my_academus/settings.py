@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'my_academus',
         'USER': 'root',
         'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'HOST': 'mariadb-academus',
+        'PORT': '3306',
     }
 }
 
