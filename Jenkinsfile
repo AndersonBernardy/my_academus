@@ -12,7 +12,7 @@ pipeline {
     }
     stages {
         stage('Compile') {
-            // agent { docker { image 'python:3.7' } }
+            agent { docker { image 'python:3.7' } }
             steps {
                 // NO-OP
                 sh 'python3 --version'
