@@ -32,7 +32,9 @@ pipeline {
         stage('Build Docker Image') {
             // agent { docker { image 'python:3.7' } }
             steps {
-                docker.build "${IMAGE_NAME}:${env.BUILD_ID}"
+                script {
+                    docker.build "${IMAGE_NAME}:${env.BUILD_ID}"
+                }
             }
         }
         stage('Deliver') { 
