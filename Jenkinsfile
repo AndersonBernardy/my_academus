@@ -50,14 +50,15 @@ pipeline {
         }
     }
     // Send email
-    post {
-        always {
-            mail to: 'andersonbmartinelli@gmail.com',
-            subject: "Jenkins Build: ${currentBuild.fullDisplayName}",
-            body: """
-                Project: ${currentBuild.projectName} ${env.BUILD_ID}
-                Build result: ${currentBuild.result}
-            """
-        }
-    }
+    // Disabled because of insecurity
+    // post {
+    //     always {
+    //         mail to: 'user@gmail.com',
+    //         subject: "Jenkins Build: ${currentBuild.fullDisplayName}",
+    //         body: """
+    //             Project: ${currentBuild.projectName} ${env.BUILD_ID}
+    //             Build result: ${currentBuild.result}
+    //         """
+    //     }
+    // }
 }
