@@ -1,5 +1,6 @@
 pipeline {
-    agent { docker { image 'python:3.7' } }
+    // agent { docker { image 'python:3.7' } }
+    agent none
     options {
         // Stop build if a step fail
         skipStagesAfterUnstable()
@@ -30,7 +31,7 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            agent none
+            // agent none
             steps {
                 script {
                     docker.build "${IMAGE_NAME}:${env.BUILD_ID}"
