@@ -1,0 +1,57 @@
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Disciplina</th>
+        <th scope="col">Início</th>
+        <th scope="col">Término</th>
+        <th scope="col">Ver</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Remover</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for class in classes %}
+      <tr>
+        <td>{{ class.code }}</td>
+        <td>{{ class.discipline }}</td>
+        <td>{{ class.start_date }}</td>
+        <td>{{ class.end_date }}</td>
+        <td>
+          <a href="{% url 'class_detail' class.id %}">
+            <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/159/159604.svg">
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'class_edit' class.id %}">
+            <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/149/149850.svg">
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'class_delete' class.id %}">
+            <img class="image-icon mx-auto d-block" src="https://image.flaticon.com/icons/svg/64/64022.svg">
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><strong>Total: {{classes.count}} Turma(s) </strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+{% endblock %}

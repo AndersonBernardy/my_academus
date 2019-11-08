@@ -1,5 +1,4 @@
 pipeline {
-    // agent { docker { image 'python:3.7' } }
     agent any
     options {
         // Stop build if a step fail
@@ -18,18 +17,6 @@ pipeline {
                 sh 'python3 --version'
             }
         }
-        stage('Test') {
-            // agent { docker { image 'python:3.7' } }
-            steps {
-                sh "echo 'TODO run tests'"
-                // Example: sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-            }
-            post {
-                always {
-                    sh "echo 'TODO'"
-                }
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -37,6 +24,18 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            // agent { docker { image 'python:3.7' } }
+            steps {
+                sh "echo 'TODO run tests'"
+            }
+            post {
+                always {
+                    sh "echo 'TODO'"
+                }
+            }
+        }
+
         stage('Deliver') { 
             // agent { docker { image 'python:3.7' } }
             steps {

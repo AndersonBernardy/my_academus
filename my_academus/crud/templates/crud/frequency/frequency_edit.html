@@ -1,0 +1,52 @@
+{% extends 'crud/header.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm">
+      <h6><b>Aluno:</b> {{frequency.enrolment.student.name}}</h6>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <div class="col-md-2 col-sm">
+      <h6><b>Turma:</b> {{frequency.enrolment.d_class.code}}</h6>
+    </div>
+    <div class="col-md-4 col-sm">
+      <h6><b>Disciplina:</b> {{frequency.enrolment.d_class.discipline.name}}</h6>
+    </div>
+    <div class="col-md-4 col-sm">
+      <h6><b>Curso:</b> {{frequency.enrolment.d_class.discipline.course}}</h6>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <div class="col-md-6 col-sm">
+      <h6><b>Data:</b> {{frequency.class_time.class_datetime}}</h6>
+    </div>
+  </div>
+  </br>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="presence">Presença</label>
+        <select id="presence" name="presence" class="form-control">
+          <option value="none" selected disabled>Selecione uma opção</option>
+          {% for presence in presence_choices %}
+            {% if form.instance.presence.short == presence.short %}
+              <option value="{{presence.short}}">{{presence.description}}</option>
+            {% else %}
+              <option value="{{presence.short}}">{{presence.description}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+</div>
+
+{% endblock %}

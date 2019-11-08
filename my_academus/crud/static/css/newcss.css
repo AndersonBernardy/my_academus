@@ -1,0 +1,42 @@
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: rgb(214, 63, 101);
+}
+
+a:hover {
+    color: rgb(99, 9, 24);
+}
+
+a:visited {
+    color: rgb(212, 188, 51);
+}
+
+.image-home{
+    width: 130px;
+    background-color: white;
+    border-radius: 100px;
+    margin-left: 120px;
+    margin-top: -60px;
+    margin-bottom: -60px;
+}
+
+.image-block{
+    display: flex;
+}
+
+.card-left{
+    margin-top: 90px;
+    margin-left: -150px;
+}
+
+.header-academus{
+    height: 200px;
+    background-image: url("https://i.pinimg.com/originals/54/b5/2c/54b52cfba679d48a53a12a94066794b8.jpg");
+}
+
+.image-icon{
+    width: 20px;
+}

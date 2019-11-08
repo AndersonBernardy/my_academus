@@ -1,4 +1,0 @@
-django==2.2.7
-sqlparse==0.3.0
-pytz==2019.3
-mysqlclient==1.4.4
