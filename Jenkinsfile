@@ -7,10 +7,14 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
   }
   environment {
+    BASE_IMAGE_DOCKERFILE_DIR = 'setup/base'
     BASE_IMAGE = 'django-mariadb-base'
     TESTER_IMAGE = 'django-selenium-tester'
+    TESTER_IMAGE_DOCKERFILE_DIR = 'setup/tester'
     APP_IMAGE = 'my-academus-app'
+    APP_IMAGE_DOCKERFILE_DIR = 'setup/app'
     APP_TESTER_IMAGE = 'my-academus-tester'
+    APP_TESTER_IMAGE_DOCKERFILE_DIR = 'setup/app-tester'
   }
 
   stages {
@@ -22,7 +26,7 @@ pipeline {
               def image = sh "docker images -q ${BASE_IMAGE}"
               if (image == ''){
                 sh "echo 'Building Image: ${BASE_IMAGE}'"
-                docker.build "${BASE_IMAGE}"
+                docker.build("${BASE_IMAGE}", "${BASE_IMAGE_DOCKERFILE_DIR}")
               } else {
                 sh "echo 'Image already built: ${BASE_IMAGE}'"
               }
@@ -35,7 +39,7 @@ pipeline {
               def image = sh "docker images -q ${TESTER_IMAGE}"
               if (image == ''){
                 sh "echo 'Building Image: ${TESTER_IMAGE}'"
-                docker.build "${TESTER_IMAGE}"
+                docker.build("${TESTER_IMAGE}", "${TESTER_IMAGE_DOCKERFILE_DIR}")
               } else {
                 sh "echo 'Image already built: ${TESTER_IMAGE}'"
               }
@@ -51,7 +55,7 @@ pipeline {
           steps {
             script {
               sh "echo 'Building Image: ${APP_TESTER_IMAGE}:${env.BUILD_ID}'"
-              docker.build "${APP_TESTER_IMAGE}:${env.BUILD_ID}"
+              docker.build("${APP_TESTER_IMAGE}:${env.BUILD_ID}", "${APP_TESTER_IMAGE_DOCKERFILE_DIR}")
             }
           }
         }
@@ -65,7 +69,7 @@ pipeline {
           post {
             always {
               script {
-                docker.rmi "${APP_TESTER_IMAGE}:${env.BUILD_ID}"
+                docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
               }
             }
             failure {
@@ -79,7 +83,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          docker.build "${APP_IMAGE}:${env.BUILD_ID}"
+          docker.build("${APP_IMAGE}:${env.BUILD_ID}", "${APP_IMAGE_DOCKERFILE_DIR}")
         }
       }
     }
