@@ -57,6 +57,7 @@ pipeline {
           agent { docker { image "${APP_TESTER_IMAGE}:${env.BUILD_ID}" } }
           steps {
               sh "echo 'Testing'"
+              sh "python3 manage.py runserver localhost:8000"
               sh "python3 manage.py test -v 3 */"
           }
           post {
@@ -73,7 +74,7 @@ pipeline {
       }
     }
 
-    stage('Build App Image') {
+    stage('Build') {
       steps {
         script {
           docker.build "${APP_IMAGE}:${env.BUILD_ID}"
