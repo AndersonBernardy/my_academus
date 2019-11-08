@@ -30,13 +30,15 @@ pipeline {
           }
         }
         stage('Setup Base Tester Image') {
-          script {
-            def image = sh "docker images -q ${TESTER_IMAGE}"
-            if (image == ''){
-              sh "echo 'Building Image: ${TESTER_IMAGE}'"
-              docker.build "${TESTER_IMAGE}"
-            } else {
-              sh "echo 'Image already built: ${TESTER_IMAGE}'"
+          steps {
+            script {
+              def image = sh "docker images -q ${TESTER_IMAGE}"
+              if (image == ''){
+                sh "echo 'Building Image: ${TESTER_IMAGE}'"
+                docker.build "${TESTER_IMAGE}"
+              } else {
+                sh "echo 'Image already built: ${TESTER_IMAGE}'"
+              }
             }
           }
         }
@@ -83,27 +85,3 @@ pipeline {
     }
   }
 }
-
-// stage('Deliver') { 
-//   // agent { docker { image 'python:3.7' } }
-//   steps {
-//     sh 'echo > "teste.txt" hello' 
-//   }
-//   post {
-//     success {
-//       archiveArtifacts 'teste.txt' 
-//     }
-//   }
-// }
-// Send email
-// Disabled because of insecurity
-// post {
-//     always {
-//         mail to: 'user@gmail.com',
-//         subject: "Jenkins Build: ${currentBuild.fullDisplayName}",
-//         body: """
-//             Project: ${currentBuild.projectName} ${env.BUILD_ID}
-//             Build result: ${currentBuild.result}
-//         """
-//     }
-// }
