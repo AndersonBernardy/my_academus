@@ -7,14 +7,14 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
   }
   environment {
-    BASE_IMAGE_DOCKERFILE_DIR = 'setup/base'
+    BASE_IMAGE_DOCKERFILE_DIR = './setup/base'
     BASE_IMAGE = 'django-mariadb-base'
     TESTER_IMAGE = 'django-selenium-tester'
-    TESTER_IMAGE_DOCKERFILE_DIR = 'setup/tester'
+    TESTER_IMAGE_DOCKERFILE_DIR = './setup/tester'
     APP_IMAGE = 'my-academus-app'
-    APP_IMAGE_DOCKERFILE_DIR = 'setup/app'
+    APP_IMAGE_DOCKERFILE_DIR = './setup/app'
     APP_TESTER_IMAGE = 'my-academus-tester'
-    APP_TESTER_IMAGE_DOCKERFILE_DIR = 'setup/app-tester'
+    APP_TESTER_IMAGE_DOCKERFILE_DIR = './setup/app-tester'
   }
 
   stages {
