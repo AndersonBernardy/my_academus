@@ -9,7 +9,7 @@ import time
 class MyAcademusTest(StaticLiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome("C:\Ellen\chromedriver.exe")
+        self.browser = webdriver.Firefox()
 
     def tearDown(self):
         self.browser.close()
