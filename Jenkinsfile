@@ -24,7 +24,7 @@ pipeline {
           steps {
             script {
               def image = sh "docker images -q ${BASE_IMAGE}"
-              if (image == ''){
+              if (image != "${BASE_IMAGE}"){
                 sh "echo 'Building Image: ${BASE_IMAGE}'"
                 docker.build("${BASE_IMAGE}", "${BASE_IMAGE_DOCKERFILE_DIR}")
               } else {
@@ -37,7 +37,7 @@ pipeline {
           steps {
             script {
               def image = sh "docker images -q ${TESTER_IMAGE}"
-              if (image == ''){
+              if (image != "${TESTER_IMAGE}"){
                 sh "echo 'Building Image: ${TESTER_IMAGE}'"
                 docker.build("${TESTER_IMAGE}", "${TESTER_IMAGE_DOCKERFILE_DIR}")
               } else {
