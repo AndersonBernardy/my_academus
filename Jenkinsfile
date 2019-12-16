@@ -72,7 +72,8 @@ pipeline {
           post {
             always {
               script {
-                docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
+                sh "docker rmi -f ${APP_TESTER_IMAGE}:${env.BUILD_ID}"
+                // docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
               }
             }
             failure {
