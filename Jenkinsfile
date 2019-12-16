@@ -70,12 +70,6 @@ pipeline {
               sh "python3 my_academus/manage.py test -v 3 */"
           }
           post {
-            always {
-              script {
-                sh "docker rmi -f ${APP_TESTER_IMAGE}:${env.BUILD_ID}"
-                // docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
-              }
-            }
             failure {
               sh "echo 'Test Failed'"
             }
@@ -89,6 +83,14 @@ pipeline {
         script {
           sh "docker build -f ${APP_IMAGE_DOCKERFILE_DIR}/Dockerfile -t ${APP_IMAGE}:${env.BUILD_ID} ."
           // docker.build("${APP_IMAGE}:${env.BUILD_ID}", "${APP_IMAGE_DOCKERFILE_DIR}")
+        }
+      }
+    }
+    post {
+      always {
+        script {
+          sh "docker rmi -f ${APP_TESTER_IMAGE}:${env.BUILD_ID}"
+          // docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
         }
       }
     }
