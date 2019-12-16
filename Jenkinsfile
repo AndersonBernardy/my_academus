@@ -26,7 +26,7 @@ pipeline {
               def image = sh "docker images -q ${BASE_IMAGE}"
               if (image != "${BASE_IMAGE}"){
                 sh "echo 'Building Image: ${BASE_IMAGE}'"
-                sh "docker build -f ${BASE_IMAGE_DOCKERFILE_DIR} -t ${BASE_IMAGE} ."
+                sh "docker build -f ${BASE_IMAGE_DOCKERFILE_DIR}/Dockerfile -t ${BASE_IMAGE} ."
                 // docker.build("${BASE_IMAGE}", "${BASE_IMAGE_DOCKERFILE_DIR}")
               } else {
                 sh "echo 'Image already built: ${BASE_IMAGE}'"
@@ -40,7 +40,7 @@ pipeline {
               def image = sh "docker images -q ${TESTER_IMAGE}"
               if (image != "${TESTER_IMAGE}"){
                 sh "echo 'Building Image: ${TESTER_IMAGE}'"
-                sh "docker build -f ${TESTER_IMAGE_DOCKERFILE_DIR} -t ${TESTER_IMAGE} ."
+                sh "docker build -f ${TESTER_IMAGE_DOCKERFILE_DIR}/Dockerfile -t ${TESTER_IMAGE} ."
                 // docker.build("${TESTER_IMAGE}", "${TESTER_IMAGE_DOCKERFILE_DIR}")
               } else {
                 sh "echo 'Image already built: ${TESTER_IMAGE}'"
@@ -57,7 +57,8 @@ pipeline {
           steps {
             script {
               sh "echo 'Building Image: ${APP_TESTER_IMAGE}:${env.BUILD_ID}'"
-              docker.build("${APP_TESTER_IMAGE}:${env.BUILD_ID}", "${APP_TESTER_IMAGE_DOCKERFILE_DIR}")
+              sh "docker build -f ${APP_TESTER_IMAGE_DOCKERFILE_DIR}/Dockerfile -t ${APP_TESTER_IMAGE}:${env.BUILD_ID} ."
+              // docker.build("${APP_TESTER_IMAGE}:${env.BUILD_ID}", "${APP_TESTER_IMAGE_DOCKERFILE_DIR}")
             }
           }
         }
@@ -85,7 +86,8 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          docker.build("${APP_IMAGE}:${env.BUILD_ID}", "${APP_IMAGE_DOCKERFILE_DIR}")
+          sh "docker build -f ${APP_IMAGE_DOCKERFILE_DIR}/Dockerfile -t ${APP_IMAGE}:${env.BUILD_ID} ."
+          // docker.build("${APP_IMAGE}:${env.BUILD_ID}", "${APP_IMAGE_DOCKERFILE_DIR}")
         }
       }
     }
