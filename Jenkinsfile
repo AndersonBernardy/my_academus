@@ -86,12 +86,12 @@ pipeline {
         }
       }
     }
-    post {
-      always {
-        script {
-          sh "docker rmi -f ${APP_TESTER_IMAGE}:${env.BUILD_ID}"
-          // docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
-        }
+  }
+  post {
+    always {
+      script {
+        sh "docker rmi -f ${APP_TESTER_IMAGE}:${env.BUILD_ID}"
+        // docker.rmi("${APP_TESTER_IMAGE}:${env.BUILD_ID}")
       }
     }
   }
