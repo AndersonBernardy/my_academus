@@ -67,7 +67,7 @@ pipeline {
           steps {
               sh "echo 'Testing'"
               // sh "python3 my_academus/manage.py runserver localhost:8000"
-              sh "python3 my_academus/manage.py test -v 3 */"
+              sh "python3 my_academus/manage.py test -v 3 ./my_academus/*/"
           }
           post {
             failure {
